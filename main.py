@@ -1,4 +1,5 @@
 #!/usr/bin/python
+"""Usage: python main.py path/to/directory"""
 import time
 import sys
 
@@ -32,17 +33,14 @@ class PythonPatternHandler(PatternMatchingEventHandler):
         cmd = "python -m doctest " + program
         process = Popen([cmd], shell=True)
         process.wait()
+        self.notification.close()
         if process.returncode == 0:
-            self.notification.close()
             self.notification.update('OK TO TALK', '', 'g.jpg')
-            self.notification.set_timeout(5*60*1000)
-            self.notification.show()
+            print('Tests passing!')
         else:
-            self.notification.close()
             self.notification.update('NOT OK TO TALK', '', 'r.jpg')
-            self.notification.set_timeout(5*60*1000)
-            self.notification.show()
-
+        self.notification.set_timeout(5*60*1000)
+        self.notification.show()
 
 if __name__ == "__main__":
     event_handler = PythonPatternHandler()
@@ -50,6 +48,7 @@ if __name__ == "__main__":
     path = sys.argv[1] if len(sys.argv) > 1 else '.'
     observer.schedule(event_handler, path, recursive=False)
     observer.start()
+    print('Path to watch: {}\nTo change, reopen with path in first argument'.format(path))
     try:
         while True:
             time.sleep(0.5)
