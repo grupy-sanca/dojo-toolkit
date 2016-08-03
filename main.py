@@ -1,19 +1,21 @@
 #!/usr/bin/python
 import time
 import sys
+
 from pgi.repository import Notify
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
+from subprocess import Popen
 
 
-class pythonPatternHandler(PatternMatchingEventHandler):
+class PythonPatternHandler(PatternMatchingEventHandler):
     """Handles the python file changes"""
     patterns = ['*.py']
     ignore_directories = True
     last_time = time.time()
-    notification = None
+    Notify.init('notification')
+    notification = Notify.Notification.new('', '', '')
 
-    # TODO: icon, runs doctest with popen and its return
     def on_modified(self, event):
         """Called when a file in the dojo directory is modified
         runs the doctest and display a notification
@@ -26,16 +28,24 @@ class pythonPatternHandler(PatternMatchingEventHandler):
             self.last_time = new_time
         else:
             return
-        Notify.init('name')
-        summ = 'summ'
-        body = 'body'
-        self.notification = Notify.Notification.new(summ, body, 'red-green-icon')
-        self.notification.set_urgency(2)
-        self.notification.show()
+        program = event.src_path
+        cmd = "python -m doctest " + program
+        process = Popen([cmd], shell=True)
+        process.wait()
+        if process.returncode == 0:
+            self.notification.close()
+            self.notification.update('OK TO TALK', '', 'g.jpg')
+            self.notification.set_timeout(5*60*1000)
+            self.notification.show()
+        else:
+            self.notification.close()
+            self.notification.update('NOT OK TO TALK', '', 'r.jpg')
+            self.notification.set_timeout(5*60*1000)
+            self.notification.show()
 
 
 if __name__ == "__main__":
-    event_handler = pythonPatternHandler()
+    event_handler = PythonPatternHandler()
     observer = Observer()
     path = sys.argv[1] if len(sys.argv) > 1 else '.'
     observer.schedule(event_handler, path, recursive=False)
