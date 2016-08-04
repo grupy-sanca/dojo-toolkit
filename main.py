@@ -39,7 +39,8 @@ class PythonPatternHandler(PatternMatchingEventHandler):
             print('Tests passing!')
         else:
             self.notification.update('NOT OK TO TALK', '', 'r.jpg')
-        self.notification.set_timeout(5*60*1000)
+        self.notification.set_timeout(5 * 60 * 1)
+        self.notification.update('TIME IS UP', '', '')
         self.notification.show()
 
 if __name__ == "__main__":
