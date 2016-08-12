@@ -4,10 +4,10 @@ import time
 import sys
 import threading
 
+from subprocess import Popen
 from pgi.repository import Notify, GdkPixbuf
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
-from subprocess import Popen
 
 # in minutes
 round_time = 5
@@ -20,9 +20,6 @@ green = GdkPixbuf.Pixbuf.new_from_file("g.jpg")
 
 class PythonPatternHandler(PatternMatchingEventHandler):
     """Handles the python file changes"""
-    global notification
-    global red
-    global green
     patterns = ['*.py']
     ignore_directories = True
     last_time = time.time()
@@ -51,7 +48,7 @@ class PythonPatternHandler(PatternMatchingEventHandler):
         else:
             notification.update('NOT OK TO TALK', '', 'r.jpg')
             notification.set_image_from_pixbuf(red)
-        notification.set_timeout(5*60*1000)
+        notification.set_timeout(5 * 60 * 1000)
         notification.show()
 
 
@@ -59,17 +56,13 @@ def dojo_timer(e):
     """Wait the defined and then shows notification and waits
     for replace
     """
-    global notification
-    global round_time
-    global red
-    global green
     while True:
         notification.update('Time Up', '', '')
-        notification.set_timeout(15*1000)
+        notification.set_timeout(15 * 1000)
         notification.show()
         print("\033c")
         input('Press Enter when replaced')
-        time.sleep(round_time*60)
+        time.sleep(round_time * 60)
 
 
 if __name__ == "__main__":
