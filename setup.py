@@ -13,7 +13,7 @@ setup(
     author="Grupy-Sanca",
 
     description="A Toolkit for Python Coding Dojos",
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
 
     packages=find_packages(),
 
