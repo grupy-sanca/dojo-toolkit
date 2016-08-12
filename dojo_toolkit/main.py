@@ -47,11 +47,11 @@ class PythonPatternHandler(PatternMatchingEventHandler):
         process = Popen([cmd], shell=True)
         process.wait()
         if process.returncode == 0:
-            notification.update('OK TO TALK', '', '')
+            notification.update('OK TO TALK', '', os.path.join(ASSETS_DIR, 'g.jpg'))
             notification.set_image_from_pixbuf(green)
             print('Tests passing!')
         else:
-            notification.update('NOT OK TO TALK', '', '')
+            notification.update('NOT OK TO TALK', '', os.path.join(ASSETS_DIR, 'r.jpg'))
             notification.set_image_from_pixbuf(red)
         notification.set_timeout(5 * 60 * 1000)
         notification.show()
