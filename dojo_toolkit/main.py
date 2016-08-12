@@ -1,5 +1,6 @@
 #!/usr/bin/python
 """Usage: python main.py path/to/directory"""
+
 import os
 from subprocess import Popen
 import sys

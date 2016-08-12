@@ -1,2 +1,2 @@
 include *.txt
-graft dojo_toolkit/assets
+include dojo_toolkit/assets/*.jpg
