@@ -70,7 +70,7 @@ def dojo_timer(e):
         time.sleep(round_time * 60)
 
 
-if __name__ == "__main__":
+def main():
     event_handler = PythonPatternHandler()
     observer = Observer()
     path = sys.argv[1] if len(sys.argv) > 1 else '.'
@@ -86,3 +86,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
+
+if __name__ == "__main__":
+    main()
