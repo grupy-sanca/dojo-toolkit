@@ -1,21 +1,26 @@
 #!/usr/bin/python
 """Usage: python main.py path/to/directory"""
-import time
+import os
+from subprocess import Popen
 import sys
+import time
 import threading
 
-from subprocess import Popen
 from pgi.repository import Notify, GdkPixbuf
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
 
 # in minutes
 round_time = 5
 
 Notify.init('not')
 notification = Notify.Notification.new('', '', '')
-red = GdkPixbuf.Pixbuf.new_from_file("r.jpg")
-green = GdkPixbuf.Pixbuf.new_from_file("g.jpg")
+red = GdkPixbuf.Pixbuf.new_from_file(os.path.join(ASSETS_DIR, 'r.jpg'))
+green = GdkPixbuf.Pixbuf.new_from_file(os.path.join(ASSETS_DIR, 'g.jpg'))
 
 
 class PythonPatternHandler(PatternMatchingEventHandler):
@@ -42,11 +47,11 @@ class PythonPatternHandler(PatternMatchingEventHandler):
         process = Popen([cmd], shell=True)
         process.wait()
         if process.returncode == 0:
-            notification.update('OK TO TALK', '', 'g.jpg')
+            notification.update('OK TO TALK', '', '')
             notification.set_image_from_pixbuf(green)
             print('Tests passing!')
         else:
-            notification.update('NOT OK TO TALK', '', 'r.jpg')
+            notification.update('NOT OK TO TALK', '', '')
             notification.set_image_from_pixbuf(red)
         notification.set_timeout(5 * 60 * 1000)
         notification.show()
