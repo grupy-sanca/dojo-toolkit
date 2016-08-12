@@ -11,9 +11,10 @@ Features
 
 How to use
 ----------
-``pip install dojo-toolkit``
+::
 
-``python -m dojo_toolkit /path/to/code/directory/``
+  $ pip install dojo-toolkit
+  $ python -m dojo_toolkit /path/to/code/directory/
 
 Dependencies
 ------------
