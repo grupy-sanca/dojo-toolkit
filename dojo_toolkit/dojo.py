@@ -4,10 +4,10 @@ import threading
 
 from watchdog.observers import Observer
 
-from .code_handler import DojoCodeHandler
-from .notifier import GnomeNotifier
-from .test_runner import DoctestTestRunner
-from .timer import dojo_timer
+from dojo_toolkit.code_handler import DojoCodeHandler
+from dojo_toolkit.notifier import GnomeNotifier
+from dojo_toolkit.test_runner import DoctestTestRunner
+from dojo_toolkit.timer import dojo_timer
 
 
 class Dojo:
@@ -43,6 +43,7 @@ def main():
     code_path = sys.argv[1] if len(sys.argv) > 1 else '.'
     dojo = Dojo(code_path)
     dojo.start()
+
 
 if __name__ == "__main__":
     main()

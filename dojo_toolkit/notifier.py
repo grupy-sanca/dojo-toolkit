@@ -5,7 +5,7 @@ from pgi.repository import Notify, GdkPixbuf
 from .settings import ASSETS_DIR
 
 
-class BaseNotifier():
+class BaseNotifier(object):
     def __init__(self):
         self.fail_img_path = os.path.join(ASSETS_DIR, 'r.jpg')
         self.success_img_path = os.path.join(ASSETS_DIR, 'g.jpg')
@@ -16,7 +16,7 @@ class BaseNotifier():
 
 class GnomeNotifier(BaseNotifier):
     def __init__(self):
-        super().__init__()
+        super(GnomeNotifier, self).__init__()
 
         Notify.init('not')
         self._notifier = Notify.Notification.new('', '', '')

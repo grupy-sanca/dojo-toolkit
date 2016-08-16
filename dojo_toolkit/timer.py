@@ -8,5 +8,6 @@ def dojo_timer(notifier, round_time):
     while True:
         notifier.notify('Time Up', timeout=15 * 1000)
         print("\033c")
-        input('Press Enter when replaced')
+        print('Press Enter when replaced')
+        raw_input()
         time.sleep(round_time * 60)
