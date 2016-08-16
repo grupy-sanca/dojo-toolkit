@@ -14,7 +14,7 @@ class Dojo:
     def __init__(self, code_path, round_time=5, notifier=None, test_runner=None):
         print('Watching: {}\nTo change, reopen with path in first argument'.format(code_path))
 
-        self.round_time = 5
+        self.round_time = round_time
 
         if not notifier:
             notifier = GnomeNotifier()
