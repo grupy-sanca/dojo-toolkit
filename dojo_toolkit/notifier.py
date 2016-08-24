@@ -10,19 +10,25 @@ class BaseNotifier(object):
         self.fail_img_path = os.path.join(ASSETS_DIR, 'r.jpg')
         self.success_img_path = os.path.join(ASSETS_DIR, 'g.jpg')
 
+    def get_notifier(self):
+        raise NotImplementedError()
+
     def notify(self, message, image=None):
-        raise NotImplemented()
+        raise NotImplementedError()
 
 
 class GnomeNotifier(BaseNotifier):
     def __init__(self):
         super(GnomeNotifier, self).__init__()
 
-        Notify.init('not')
-        self._notifier = Notify.Notification.new('', '', '')
-
         self.fail_img = GdkPixbuf.Pixbuf.new_from_file(self.fail_img_path)
         self.success_img = GdkPixbuf.Pixbuf.new_from_file(self.success_img_path)
+
+        self._notifier = self.get_notifier()
+
+    def get_notifier(self):
+        Notify.init('not')
+        return Notify.Notification.new('', '', '')
 
     def notify(self, message, image_path='', timeout=5 * 60 * 1000):
         self._notifier.update(message, '', image_path)

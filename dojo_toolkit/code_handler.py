@@ -11,6 +11,7 @@ class DojoCodeHandler(PatternMatchingEventHandler):
     def __init__(self, *args, **kwargs):
         self.notifier = kwargs.pop('notifier')
         self.test_runner = kwargs.pop('test_runner')
+        self.sound_player = kwargs.pop('sound_player')
 
         super(DojoCodeHandler, self).__init__(*args, **kwargs)
 
@@ -32,6 +33,7 @@ class DojoCodeHandler(PatternMatchingEventHandler):
 
         if self.test_runner.run():
             self.notifier.success('OK TO TALK')
+            self.sound_player.play_success()
             print('Tests passing!')
         else:
             self.notifier.fail('NOT OK TO TALK')
