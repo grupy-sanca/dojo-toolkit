@@ -7,7 +7,7 @@ except NameError:
     pass
 
 
-def dojo_timer(notifier, round_time, song_player):
+def dojo_timer(notifier, round_time, sound_player):
     """Wait the defined and then shows notification and waits
     for replace
     """
@@ -15,7 +15,7 @@ def dojo_timer(notifier, round_time, song_player):
     while True:
         if not is_start:
             notifier.notify('Time Up', timeout=15 * 1000)
-            song_player.play_timeup()
+            sound_player.play_timeup()
             print('Press Enter when replaced')
             input()
         time.sleep(round_time * 60)
