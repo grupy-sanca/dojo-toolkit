@@ -1,18 +1,18 @@
 import os
 
-import vlc
+import pyglet
 
 from .settings import SOUNDS_DIR
 
 
 class SoundHandler:
     def __init__(self):
-        self.success_sound_path = os.path.join(SOUNDS_DIR, 'pass.mp3')
-        self.timeup_sound_path = os.path.join(SOUNDS_DIR, 'timeup.mp3')
-        self.start_sound_path = os.path.join(SOUNDS_DIR, 'start.mp3')
+        self.success_sound_path = os.path.join(SOUNDS_DIR, 'pass.wav')
+        self.timeup_sound_path = os.path.join(SOUNDS_DIR, 'timeup.wav')
+        self.start_sound_path = os.path.join(SOUNDS_DIR, 'start.wav')
 
     def play_sound(self, sound_path=''):
-        self.player = vlc.MediaPlayer(sound_path)
+        self.player = pyglet.media.load(sound_path, streaming=False)
         self.player.play()
 
     def play_start(self):
