@@ -23,8 +23,8 @@ class SubprocessTestRunner(BaseTestRunner):
         """
         run a test cmd using subprocess
         """
-        self.cmd = self.cmd.format(self.code_path)
-        process = Popen([self.cmd], shell=True)
+        cmd = self.cmd.format(self.code_path)
+        process = Popen([cmd], shell=True)
         process.wait()
         return process.returncode == 0
 
