@@ -1,4 +1,3 @@
-import sys
 import time
 import threading
 
@@ -8,13 +7,17 @@ from dojo_toolkit.code_handler import DojoCodeHandler
 from dojo_toolkit.notifier import GnomeNotifier
 from dojo_toolkit.test_runner import DoctestTestRunner
 from dojo_toolkit.timer import dojo_timer
+from dojo_toolkit.sound_handler import SoundHandler
 
 
 class Dojo:
+
     def __init__(self, code_path, round_time=5, notifier=None, test_runner=None):
         print('Watching: {}\nTo change, reopen with path in first argument'.format(code_path))
 
         self.round_time = round_time
+
+        self.sound_player = SoundHandler()
 
         if not notifier:
             notifier = GnomeNotifier()
@@ -22,14 +25,15 @@ class Dojo:
         if not test_runner:
             test_runner = DoctestTestRunner(code_path=code_path)
 
-        self.event_handler = DojoCodeHandler(notifier=notifier, test_runner=test_runner)
+        self.event_handler = DojoCodeHandler(notifier=notifier, test_runner=test_runner, sound_player=self.sound_player)
         self.observer = Observer()
         self.observer.schedule(self.event_handler, code_path, recursive=False)
 
-        self.timer_thread = threading.Thread(target=dojo_timer, args=(notifier, self.round_time))
+        self.timer_thread = threading.Thread(target=dojo_timer, args=(notifier, self.round_time, self.sound_player))
 
     def start(self):
         self.observer.start()
+        self.sound_player.play_start()
         self.timer_thread.start()
         try:
             while True:
@@ -37,13 +41,3 @@ class Dojo:
         except KeyboardInterrupt:
             self.observer.stop()
         self.observer.join()
-
-
-def main():
-    code_path = sys.argv[1] if len(sys.argv) > 1 else '.'
-    dojo = Dojo(code_path)
-    dojo.start()
-
-
-if __name__ == "__main__":
-    main()

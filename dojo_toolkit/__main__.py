@@ -1,3 +1,3 @@
-from .dojo import main
+from .main import main
 
 main()

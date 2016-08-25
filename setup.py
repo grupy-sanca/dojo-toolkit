@@ -11,7 +11,7 @@ package_data = {
 
 setup(
     name="dojo-toolkit",
-    version="0.2.0",
+    version="0.3.0",
     url="https://github.com/grupy-sanca/dojo-toolkit",
 
     author="Grupy-Sanca",
