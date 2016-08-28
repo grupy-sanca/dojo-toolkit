@@ -1,6 +1,9 @@
 from unittest import mock
 
-from dojo_toolkit.dojo import Dojo
+import pytest
+pytest.importorskip("pgi.repository.Notify")
+
+from dojo_toolkit.dojo import Dojo  # NOQA
 
 
 def test_dojo():
