@@ -1,4 +1,4 @@
-from unittest import mock
+from tests.conftest import mock
 
 from dojo_toolkit.code_handler import DojoCodeHandler
 

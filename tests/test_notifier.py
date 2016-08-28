@@ -1,5 +1,4 @@
-from unittest import mock
-from unittest.mock import call
+from tests.conftest import mock
 
 import pytest
 pytest.importorskip("pgi.repository.Notify")
@@ -37,7 +36,10 @@ def test_base_notifier():
 def test_gnome_notifier(pixbuf, notify):
     gnome_notifier = GnomeNotifier()
 
-    calls = [call(gnome_notifier.fail_img_path), call(gnome_notifier.success_img_path)]
+    calls = [
+        mock.call(gnome_notifier.fail_img_path),
+        mock.call(gnome_notifier.success_img_path)
+    ]
     pixbuf.Pixbuf.new_from_file.assert_has_calls(calls)
 
 

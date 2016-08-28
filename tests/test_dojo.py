@@ -1,4 +1,4 @@
-from unittest import mock
+from tests.conftest import mock
 
 import pytest
 pytest.importorskip("pgi.repository.Notify")
