@@ -5,11 +5,6 @@ python:
     - "3.4"
     - "3.5"
 
-addons:
-    apt:
-        packages:
-            - gir1.2-gtksource-3.0
-
 install:
     - pip install -r requirements-test.txt
     - pip install coveralls
