@@ -6,7 +6,7 @@ with open("requirements.txt") as reqs:
 
 
 package_data = {
-    'dojo_toolkit': ['assets/*.jpg'],
+    'dojo_toolkit': ['assets/*.jpg', 'assets/sounds/*.wav'],
 }
 
 setup(
