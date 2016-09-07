@@ -36,7 +36,6 @@ class Dojo:
 
     def start(self):
         self.observer.start()
-        self.sound_player.play_start()
         self.timer_thread.start()
         try:
             while True:
