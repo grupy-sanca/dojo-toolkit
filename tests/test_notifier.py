@@ -1,9 +1,24 @@
-from unittest import mock
-from unittest.mock import call
+from tests.conftest import mock
 
 import pytest
+pytest.importorskip("pgi.repository.Notify")
 
-from dojo_toolkit.notifier import BaseNotifier, GnomeNotifier
+from dojo_toolkit.notifier import BaseNotifier, GnomeNotifier  # NOQA
+
+
+@pytest.fixture
+def gnome_notifier():
+    return GnomeNotifier()
+
+
+@pytest.fixture
+def mocked_gnome_notifier():
+    with mock.patch('dojo_toolkit.notifier.Notify') as mock_notify, \
+         mock.patch('dojo_toolkit.notifier.GdkPixbuf') as gdk_pixbuf:
+        gnome_notifier = GnomeNotifier()
+        gnome_notifier.mock_notify = mock_notify
+        gnome_notifier.mock_gdk_pixbuf = gdk_pixbuf
+        return gnome_notifier
 
 
 def test_base_notifier():
@@ -21,7 +36,10 @@ def test_base_notifier():
 def test_gnome_notifier(pixbuf, notify):
     gnome_notifier = GnomeNotifier()
 
-    calls = [call(gnome_notifier.fail_img_path), call(gnome_notifier.success_img_path)]
+    calls = [
+        mock.call(gnome_notifier.fail_img_path),
+        mock.call(gnome_notifier.success_img_path)
+    ]
     pixbuf.Pixbuf.new_from_file.assert_has_calls(calls)
 
 

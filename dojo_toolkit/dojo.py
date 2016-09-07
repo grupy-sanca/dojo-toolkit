@@ -25,11 +25,14 @@ class Dojo:
         if not test_runner:
             test_runner = DoctestTestRunner(code_path=code_path)
 
-        self.event_handler = DojoCodeHandler(notifier=notifier, test_runner=test_runner, sound_player=self.sound_player)
+        self.event_handler = DojoCodeHandler(notifier=notifier,
+                                             test_runner=test_runner,
+                                             sound_player=self.sound_player)
         self.observer = Observer()
         self.observer.schedule(self.event_handler, code_path, recursive=False)
 
-        self.timer_thread = threading.Thread(target=dojo_timer, args=(notifier, self.round_time, self.sound_player))
+        thread_args = (notifier, self.round_time, self.sound_player)
+        self.timer_thread = threading.Thread(target=dojo_timer, args=thread_args)
 
     def start(self):
         self.observer.start()

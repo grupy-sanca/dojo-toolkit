@@ -7,6 +7,7 @@ class DojoCodeHandler(PatternMatchingEventHandler):
     """Handles the python file changes"""
     patterns = ['*.py']
     ignore_directories = True
+    min_test_time_interval = 2
 
     def __init__(self, *args, **kwargs):
         self.notifier = kwargs.pop('notifier')
@@ -15,7 +16,17 @@ class DojoCodeHandler(PatternMatchingEventHandler):
 
         super(DojoCodeHandler, self).__init__(*args, **kwargs)
 
-        self.last_time = time.time()
+        self.last_test_run_time = time.time()
+
+    def get_last_test_run_interval(self):
+        return time.time() - self.last_test_run_time
+
+    def handle_success(self):
+        self.notifier.success('OK TO TALK')
+        self.sound_player.play_success()
+
+    def handle_fail(self):
+        self.notifier.fail('NOT OK TO TALK')
 
     def on_modified(self, event):
         """Called when a file in the dojo directory is modified
@@ -24,16 +35,12 @@ class DojoCodeHandler(PatternMatchingEventHandler):
         Red for 'not ok to talk, test failing'
         """
 
-        new_time = time.time()
-        diff = new_time - self.last_time
-        if diff > 2:
-            self.last_time = new_time
-        else:
+        if self.get_last_test_run_interval() < self.min_test_time_interval:
             return
 
+        self.last_test_run_time = time.time()
+
         if self.test_runner.run():
-            self.notifier.success('OK TO TALK')
-            self.sound_player.play_success()
-            print('Tests passing!')
+            self.handle_success()
         else:
-            self.notifier.fail('NOT OK TO TALK')
+            self.handle_fail()
