@@ -11,13 +11,17 @@ from dojo_toolkit.sound_handler import SoundHandler
 
 
 class Dojo:
+    ROUND_TIME = 5
 
-    def __init__(self, code_path, round_time=5, notifier=None, test_runner=None):
+    def __init__(self, code_path, round_time=None, notifier=None, test_runner=None,
+                 mute_sound=False):
         print('Watching: {}\nTo change, reopen with path in first argument'.format(code_path))
 
-        self.round_time = round_time
+        self.sound_player = SoundHandler(mute_sound)
 
-        self.sound_player = SoundHandler()
+        if not round_time:
+            round_time = self.ROUND_TIME
+        self.round_time = round_time
 
         if not notifier:
             notifier = GnomeNotifier()
