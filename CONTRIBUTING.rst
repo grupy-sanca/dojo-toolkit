@@ -27,6 +27,28 @@ install and setup a local repository and working with github.
 __ https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/working-with-git/#working-with-git-and-github
 
 
+How to Run Dojo-Toolkit for development
+---------------------------------------
+
+1. Clone the project
+::
+  
+  $ git clone https://github.com/grupy-sanca/dojo-toolkit.git
+
+2. (optional) Create the virtual environment
+::
+  
+  $ python -m venv env
+  $ source env/bin/activate
+
+3. Install requirements
+::
+
+  $ (env) pip install -r requirements-test.txt
+
+Done :-)
+
+
 How to Run Tests
 ----------------
 ::
