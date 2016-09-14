@@ -1,8 +1,16 @@
+try:
+    from unittest import mock
+except ImportError:
+    import mock
+
 import pytest
 
-from dojo_toolkit.notifier import GnomeNotifier
+from dojo_toolkit.code_handler import DojoCodeHandler
 
 
 @pytest.fixture
-def gnome_notifier():
-    return GnomeNotifier()
+def mocked_code_handler():
+    code_handler = DojoCodeHandler(notifier=mock.Mock(),
+                                   test_runner=mock.Mock(),
+                                   sound_player=mock.Mock())
+    return code_handler

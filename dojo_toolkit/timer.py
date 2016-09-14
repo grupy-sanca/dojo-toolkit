@@ -16,7 +16,8 @@ def dojo_timer(notifier, round_time, sound_player):
         if not is_start:
             notifier.notify('Time Up', timeout=15 * 1000)
             sound_player.play_timeup()
-            print('Press Enter when replaced')
-            input()
+        print('Press Enter when replaced')
+        input()
+        sound_player.play_start()
         time.sleep(round_time * 60)
         is_start = False

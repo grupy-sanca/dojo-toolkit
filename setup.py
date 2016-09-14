@@ -6,12 +6,12 @@ with open("requirements.txt") as reqs:
 
 
 package_data = {
-    'dojo_toolkit': ['assets/*.jpg'],
+    'dojo_toolkit': ['assets/*.jpg', 'assets/sounds/*.wav'],
 }
 
 setup(
     name="dojo-toolkit",
-    version="0.3.1",
+    version="0.3.4",
     url="https://github.com/grupy-sanca/dojo-toolkit",
 
     author="Grupy-Sanca",
