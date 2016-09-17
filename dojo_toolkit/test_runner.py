@@ -31,6 +31,6 @@ class SubprocessTestRunner(BaseTestRunner):
 
 class DoctestTestRunner(SubprocessTestRunner):
     """
-    Subprocess doctest runner 
+    Subprocess doctest runner
     """
     cmd = "python -m doctest {}/*.py"
