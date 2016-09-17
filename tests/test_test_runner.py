@@ -1,56 +1,85 @@
 """
-Tests of test_runner.py
+test_runner.py tests
+Tested on Ubuntu 16.04
 """
-
+import pytest
 import os
 from dojo_toolkit.test_runner import BaseTestRunner, SubprocessTestRunner, DoctestTestRunner
 
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def test_base():
+@pytest.fixture
+def not_a_good_cmd():
+    return "parangaricutirimicuaro"
+
+
+@pytest.fixture
+def echo_cmd():
+    return "echo birl"
+
+
+@pytest.fixture
+def code_path():
+    return "/path/to/my/code"
+
+
+@pytest.fixture
+def subprocess_test_runner(code_path):
+    return SubprocessTestRunner(code_path)
+
+
+@pytest.fixture
+def base_test_runner(code_path):
+    return BaseTestRunner(code_path)
+
+
+@pytest.fixture
+def doctest_test_runner():
+    return DoctestTestRunner(os.path.join(MODULE_DIR, "data", "doctest_ok_tests"))
+
+
+@pytest.fixture
+def doctest_test_runner_fail():
+    return DoctestTestRunner(os.path.join(MODULE_DIR, "data", "doctest_fail_tests"))
+
+
+def test_base(base_test_runner, code_path):
     """
     test BaseTestRunner
     """
-    code_path = "/path/to/my/code"
-    base_test = BaseTestRunner(code_path)
-    assert base_test.code_path == code_path
-    base_test.code_path = "another/path"
-    assert base_test.code_path != code_path
+    assert base_test_runner.code_path == code_path
 
 
-def test_subprocess():
+def test_subprocess(subprocess_test_runner, code_path, echo_cmd):
     """
-    test SubprocessTestRunner
+    test SubprocessTestRunner when cmd not fail
     """
-    code_path = "/path/to/my/code"
-    not_cmd = "parangaricutirimicuaro"
-    cmd = "echo hi"
-
-    subprocess_test = SubprocessTestRunner(code_path)
-    assert subprocess_test.code_path == code_path
-
-    # tests when cmd fail
-    subprocess_test.cmd = not_cmd
-    assert subprocess_test.cmd == not_cmd
-    assert not subprocess_test.run()
-
-    # test when cmd not fail
-    subprocess_test.cmd = cmd
-    assert subprocess_test.cmd == cmd
-    assert subprocess_test.run()
+    assert subprocess_test_runner.code_path == code_path
+    subprocess_test_runner.cmd = echo_cmd
+    assert subprocess_test_runner.cmd == echo_cmd
+    assert subprocess_test_runner.run()
 
 
-def test_subproces_doctest():
+def test_subprocess_fail(subprocess_test_runner, code_path, not_a_good_cmd):
     """
-    test DoctestTestRunner
+    test SubprocessTestRunner when cmd fail
     """
-    doctest_test = DoctestTestRunner(os.path.join(MODULE_DIR, "data", "doctest_ok_tests"))
-    doctest_test.run()
-    assert doctest_test.run()
+    assert subprocess_test_runner.code_path == code_path
+    subprocess_test_runner.cmd = not_a_good_cmd
+    assert subprocess_test_runner.cmd == not_a_good_cmd
+    assert not subprocess_test_runner.run()
 
-    doctest_test.code_path = os.path.join(MODULE_DIR, "data", "doctest_fail_tests")
-    doctest_test.run()
 
-    assert doctest_test.code_path == os.path.join(MODULE_DIR, "data", "doctest_fail_tests")
-    assert not doctest_test.run()
+def test_subprocess_doctest_run(doctest_test_runner):
+    """
+    test a good doctest
+    """
+    assert doctest_test_runner.run()
+
+
+def test_subprocess_doctest_run_fail(doctest_test_runner_fail):
+    """
+    test a fail doctest
+    """
+    assert not doctest_test_runner_fail.run()
