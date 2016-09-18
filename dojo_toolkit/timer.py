@@ -11,13 +11,14 @@ class Timer:
 
     def __init__(self, duration_in_minutes):
         self.duration = duration_in_minutes * 60
-        self.thread = Thread(target=self.timer)
-        self.start()
 
     def start(self):
+        self.ellapsed_time = 0
+
         self.is_running = True
         self.start_time = time.time()
-        self.ellapsed_time = 0
+
+        self.thread = Thread(target=self.timer)
         self.thread.start()
 
     def timer(self):

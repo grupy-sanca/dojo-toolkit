@@ -28,8 +28,6 @@ class Dojo:
         self.observer.schedule(self.event_handler, self.code_path, recursive=False)
 
         self.timer = Timer(self.round_time)
-        self.thread = Thread(target=self.dojo)
-        self.start()
 
     def start(self):
         self.observer.start()
@@ -37,6 +35,7 @@ class Dojo:
 
         self.is_running = True
         print('Dojo toolkit started!')
+        self.thread = Thread(target=self.dojo)
         self.thread.start()
 
         self.thread.join()
