@@ -1,7 +1,3 @@
-"""
-test_runner.py tests
-Tested on Ubuntu 16.04
-"""
 import pytest
 import os
 from dojo_toolkit.test_runner import BaseTestRunner, SubprocessTestRunner, DoctestTestRunner
@@ -10,7 +6,7 @@ MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 @pytest.fixture
-def not_a_good_cmd():
+def wrong_cmd():
     return "parangaricutirimicuaro"
 
 
@@ -61,13 +57,13 @@ def test_subprocess(subprocess_test_runner, code_path, echo_cmd):
     assert subprocess_test_runner.run()
 
 
-def test_subprocess_fail(subprocess_test_runner, code_path, not_a_good_cmd):
+def test_subprocess_fail(subprocess_test_runner, code_path, wrong_cmd):
     """
     test SubprocessTestRunner when cmd fail
     """
     assert subprocess_test_runner.code_path == code_path
-    subprocess_test_runner.cmd = not_a_good_cmd
-    assert subprocess_test_runner.cmd == not_a_good_cmd
+    subprocess_test_runner.cmd = wrong_cmd
+    assert subprocess_test_runner.cmd == wrong_cmd
     assert not subprocess_test_runner.run()
 
 
