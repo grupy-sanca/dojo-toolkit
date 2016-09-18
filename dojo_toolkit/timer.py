@@ -1,23 +1,27 @@
+from math import floor
+from threading import Thread
 import time
 
 
-try:
-    input = raw_input
-except NameError:
-    pass
-
-
-def dojo_timer(notifier, round_time, sound_player):
-    """Wait the defined and then shows notification and waits
-    for replace
+class Timer:
     """
-    is_start = True
-    while True:
-        if not is_start:
-            notifier.notify('Time Up', timeout=15 * 1000)
-            sound_player.play_timeup()
-        print('Press Enter when replaced')
-        input()
-        sound_player.play_start()
-        time.sleep(round_time * 60)
-        is_start = False
+    A timer that runs on a separated thread and "ticks" every second. It
+    keeps track of the ellapsed time.
+    """
+
+    def __init__(self, duration_in_minutes):
+        self.duration = duration_in_minutes * 60
+        self.thread = Thread(target=self.timer)
+        self.start()
+
+    def start(self):
+        self.is_running = True
+        self.start_time = time.time()
+        self.ellapsed_time = 0
+        self.thread.start()
+
+    def timer(self):
+        while self.ellapsed_time <= self.duration:
+            self.ellapsed_time = floor(time.time() - self.start_time)
+            time.sleep(1)
+        self.is_running = False
