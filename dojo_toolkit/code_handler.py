@@ -24,6 +24,7 @@ class DojoCodeHandler(PatternMatchingEventHandler):
     def handle_success(self):
         self.notifier.success('OK TO TALK')
         self.sound_player.play_success()
+        print('Tests passed!')
 
     def handle_fail(self):
         self.notifier.fail('NOT OK TO TALK')
