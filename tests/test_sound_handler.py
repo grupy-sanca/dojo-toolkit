@@ -22,7 +22,8 @@ def test_sound_handler_muted_sound_handler(mocked_muted_sound_handler):
     mocked_muted_sound_handler.play_success()
 
 
-def test_sound_handler():
+@mock.patch('dojo_toolkit.sound_handler.pyglet')
+def test_sound_handler(pyglet):
     sound_handler = SoundHandler()
     assert sound_handler
     assert sound_handler.play_start
