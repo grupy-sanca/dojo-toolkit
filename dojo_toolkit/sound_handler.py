@@ -5,6 +5,17 @@ import pyglet
 from .settings import SOUNDS_DIR
 
 
+class MutedSoundHandler:
+    def play_start(self):
+        pass
+
+    def play_success(self):
+        pass
+
+    def play_timeup(self):
+        pass
+
+
 class SoundHandler:
     def __init__(self):
         self.success_sound_path = os.path.join(SOUNDS_DIR, 'pass.wav')
