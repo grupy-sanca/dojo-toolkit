@@ -25,6 +25,12 @@ setup(
 
     package_data=package_data,
 
+    entry_points={
+        'console_scripts': [
+            'dojo=dojo_toolkit.main:main',
+        ]
+    },
+
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Programming Language :: Python :: 3',

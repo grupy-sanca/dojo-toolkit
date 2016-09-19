@@ -17,7 +17,7 @@ How to use
 ::
 
   $ pip install dojo-toolkit
-  $ python -m dojo_toolkit /path/to/code/directory/
+  $ dojo /path/to/code/directory/
 
 
 Contributing
