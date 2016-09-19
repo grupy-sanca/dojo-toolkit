@@ -3,6 +3,7 @@ import os
 import pyglet
 
 from .settings import SOUNDS_DIR
+from tests.conftest import mock
 
 
 class MutedSoundHandler:
@@ -18,7 +19,11 @@ class MutedSoundHandler:
 
 class SoundHandler:
     def __init__(self):
-        self.player = pyglet.media.Player()
+        # workaround to dojo-toolkit work on travis CI
+        try:
+            self.player = pyglet.media.Player()
+        except:
+            self.player = mock.Mock()
 
         start_audio_path = os.path.join(SOUNDS_DIR, 'start.wav')
         self.start_media = pyglet.media.load(start_audio_path, streaming=False)
