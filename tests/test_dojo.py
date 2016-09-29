@@ -1,32 +1,66 @@
-from tests.conftest import mock
-
 import pytest
-pytest.importorskip("pgi.repository.Notify")
 
 from dojo_toolkit.dojo import Dojo  # NOQA
+from tests.conftest import mock
 
 
-def test_dojo():
-    dojo = Dojo('/foo/bar', notifier=mock.Mock(), test_runner=mock.Mock())
-    assert dojo.round_time
-    assert dojo.event_handler
-    assert dojo.observer
-    assert dojo.timer_thread
+@pytest.fixture
+def mocked_dojo():
+    with mock.patch('dojo_toolkit.dojo.Observer'), \
+            mock.patch('dojo_toolkit.dojo.Timer'), \
+            mock.patch('dojo_toolkit.dojo.SoundHandler'):
+        return Dojo('/foo/bar', notifier=mock.Mock(), test_runner=mock.Mock())
 
 
-@mock.patch('threading.Thread')
-@mock.patch('dojo_toolkit.dojo.dojo_timer')
-@mock.patch('dojo_toolkit.dojo.Observer')
-@mock.patch('dojo_toolkit.dojo.SoundHandler')
-def test_dojo_start(observer, dojo_timer, sound_handler, thread):
-    dojo = Dojo('/foo/bar')
-    with mock.patch('time.sleep', side_effect=KeyboardInterrupt):
-        dojo.start()
+@mock.patch('dojo_toolkit.dojo.Thread')
+@mock.patch('six.moves.input')
+def test_dojo_start(input, thread, mocked_dojo):
+    mocked_dojo.start()
 
-    assert dojo_timer.called
-    assert dojo.sound_player.play_start.called
-    assert dojo.timer_thread.start.called
-    assert dojo.observer.schedule.called
-    assert dojo.observer.start.called
-    assert dojo.observer.stop.called
-    assert dojo.observer.join.called
+    assert mocked_dojo.observer.start.called
+    assert mocked_dojo.thread.start.called
+    assert mocked_dojo.thread.join.called
+    assert mocked_dojo.observer.join.called
+
+
+@mock.patch('six.moves.input')
+def test_dojo_dojo(input, mocked_dojo):
+    mocked_dojo.is_running = True
+    mocked_dojo.timer.is_running = False
+    mocked_dojo.round_finished = mock.Mock(side_effect=KeyboardInterrupt)
+    with pytest.raises(KeyboardInterrupt):
+        mocked_dojo.dojo()
+
+
+def test_dojo_dojo_stopped(mocked_dojo):
+    mocked_dojo.is_running = False
+    mocked_dojo.dojo()
+
+
+@mock.patch('six.moves.input')
+def test_dojo_await_pilot_exchange(six_input, mocked_dojo):
+    mocked_dojo.await_pilot_exchange()
+    assert six_input.called
+
+
+def test_dojo_round_start(mocked_dojo):
+    mocked_dojo.round_start()
+    assert mocked_dojo.timer.start.called
+    assert mocked_dojo.sound_player.play_start.called
+
+
+def test_dojo_round_info_without_notification(mocked_dojo):
+    mocked_dojo.round_info()
+    assert not mocked_dojo.notifier.notify.called
+
+
+def test_dojo_round_info_with_notification(mocked_dojo):
+    mocked_dojo.timer.ellapsed_time = 60
+    mocked_dojo.round_info()
+    assert mocked_dojo.notifier.notify.called
+
+
+def test_dojo_round_finished(mocked_dojo):
+    mocked_dojo.round_finished()
+    assert mocked_dojo.notifier.notify.called
+    assert mocked_dojo.sound_player.play_timeup.called

@@ -1,6 +1,13 @@
 import os
 
-from pgi.repository import Notify, GdkPixbuf
+from tests.conftest import mock
+
+# workaround to tests run on travis
+try:
+    from pgi.repository import Notify, GdkPixbuf
+except:
+    Notify = mock.Mock()
+    GdkPixbuf = mock.Mock()
 
 from .settings import ASSETS_DIR
 

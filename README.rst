@@ -1,6 +1,13 @@
 Dojo Toolkit
 ============
 
+.. image:: https://travis-ci.org/grupy-sanca/dojo-toolkit.svg?branch=master
+  :target: https://travis-ci.org/grupy-sanca/dojo-toolkit
+
+.. image:: https://coveralls.io/repos/github/grupy-sanca/dojo-toolkit/badge.svg?branch=master
+  :target: https://coveralls.io/github/grupy-sanca/dojo-toolkit?branch=master
+
+
 Toolkit for python coding dojos.
 
 Source: https://github.com/grupy-sanca/dojo-toolkit
@@ -36,9 +43,9 @@ Roadmap
 -------
 **0.4.0**
 
-- Tests + CI
+- Tests + CI (done)
 - Minor bug fixes
-- Sound notifications
+- Sound notifications (done)
 - Minor improvements
 
 
@@ -58,5 +65,5 @@ Changelog
 **0.1.0** (Initial version)
 
 - Timer for managing rounds
-- Watch code folder and run ``doctest``s on changes
+- Watch code folder and run doctests on changes
 - Show notifications using Libnotify
