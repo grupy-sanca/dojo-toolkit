@@ -3,23 +3,51 @@ import os
 import pyglet
 
 from .settings import SOUNDS_DIR
+from tests.conftest import mock
+
+
+class MutedSoundHandler:
+    def play_start(self):
+        pass
+
+    def play_success(self):
+        pass
+
+    def play_timeup(self):
+        pass
 
 
 class SoundHandler:
     def __init__(self):
-        self.success_sound_path = os.path.join(SOUNDS_DIR, 'pass.wav')
-        self.timeup_sound_path = os.path.join(SOUNDS_DIR, 'timeup.wav')
-        self.start_sound_path = os.path.join(SOUNDS_DIR, 'start.wav')
+        # workaround to dojo-toolkit work on travis CI
+        try:
+            self.player = pyglet.media.Player()
+        except:
+            self.player = mock.Mock()
 
-    def play_sound(self, sound_path=''):
-        self.player = pyglet.media.load(sound_path, streaming=False)
-        self.player.play()
+        start_audio_path = os.path.join(SOUNDS_DIR, 'start.wav')
+        self.start_media = pyglet.media.load(start_audio_path, streaming=False)
+
+        success_audio_path = os.path.join(SOUNDS_DIR, 'pass.wav')
+        self.success_media = pyglet.media.load(success_audio_path, streaming=False)
+
+        timeup_audio_path = os.path.join(SOUNDS_DIR, 'timeup.wav')
+        self.timeup_media = pyglet.media.load(timeup_audio_path, streaming=False)
+
+    def play(self):
+        if self.player.playing:
+            self.player.next_source()
+        else:
+            self.player.play()
 
     def play_start(self):
-        self.play_sound(self.start_sound_path)
-
-    def play_timeup(self):
-        self.play_sound(self.timeup_sound_path)
+        self.player.queue(self.start_media)
+        self.play()
 
     def play_success(self):
-        self.play_sound(self.success_sound_path)
+        self.player.queue(self.success_media)
+        self.play()
+
+    def play_timeup(self):
+        self.player.queue(self.timeup_media)
+        self.play()
