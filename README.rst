@@ -16,7 +16,9 @@ Source: https://github.com/grupy-sanca/dojo-toolkit
 Features
 --------
 - Timer to determine the pilot's turn
-- Run tests automatically and notify when people can or cannot talk
+- Display notifications on pilot's time up, tests passed and failed
+- Dojo Semaphor through OS notifications
+- Run tests after each save
 
 
 How to use
@@ -41,16 +43,20 @@ Dependencies
 
 Roadmap
 -------
-**0.4.0**
+**0.5.0**
 
-- Tests + CI (done)
-- Minor bug fixes
-- Sound notifications (done)
-- Minor improvements
+TDB
 
 
 Changelog
 ---------
+
+**0.4.0**
+
+- Tests + CI (above 95% coverage)
+- Sound notifications
+- Minor bug fixes
+- Minor improvements
 
 **0.3.0**
 
