@@ -6,17 +6,6 @@ from .settings import SOUNDS_DIR
 from tests.conftest import mock
 
 
-class MutedSoundHandler:
-    def play_start(self):
-        pass
-
-    def play_success(self):
-        pass
-
-    def play_timeup(self):
-        pass
-
-
 class SoundHandler:
     def __init__(self):
         # workaround to dojo-toolkit work on travis CI

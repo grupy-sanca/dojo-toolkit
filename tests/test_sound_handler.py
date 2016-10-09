@@ -1,6 +1,6 @@
 import pytest
 
-from dojo_toolkit.sound_handler import MutedSoundHandler, SoundHandler
+from dojo_toolkit.sound_handler import SoundHandler
 from tests.conftest import mock
 
 
@@ -8,18 +8,6 @@ from tests.conftest import mock
 def mocked_sound_handler():
     with mock.patch('dojo_toolkit.sound_handler.pyglet'):
         return SoundHandler()
-
-
-@pytest.fixture
-def mocked_muted_sound_handler():
-    with mock.patch('dojo_toolkit.sound_handler.pyglet'):
-        return MutedSoundHandler()
-
-
-def test_sound_handler_muted_sound_handler(mocked_muted_sound_handler):
-    mocked_muted_sound_handler.play_start()
-    mocked_muted_sound_handler.play_timeup()
-    mocked_muted_sound_handler.play_success()
 
 
 @mock.patch('dojo_toolkit.sound_handler.pyglet')

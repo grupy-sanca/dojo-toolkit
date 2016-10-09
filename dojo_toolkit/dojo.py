@@ -1,12 +1,12 @@
-from six import moves
-
 from threading import Thread
+from unittest.mock import Mock
 
+from six import moves
 from watchdog.observers import Observer
 
 from dojo_toolkit.code_handler import DojoCodeHandler
 from dojo_toolkit.notifier import GnomeNotifier
-from dojo_toolkit.sound_handler import MutedSoundHandler, SoundHandler
+from dojo_toolkit.sound_handler import SoundHandler
 from dojo_toolkit.test_runner import DoctestTestRunner
 from dojo_toolkit.timer import Timer
 
@@ -19,7 +19,7 @@ class Dojo:
         self.round_time = round_time or self.ROUND_TIME
         self.notifier = notifier or GnomeNotifier()
         self.test_runner = test_runner or DoctestTestRunner(code_path=code_path)
-        self.sound_player = MutedSoundHandler() if mute else SoundHandler()
+        self.sound_player = Mock() if mute else SoundHandler()
 
         self.event_handler = DojoCodeHandler(notifier=self.notifier,
                                              test_runner=self.test_runner,
