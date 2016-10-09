@@ -1,5 +1,5 @@
 from dojo_toolkit.main import main, parse_args
-from tests.conftest import mock
+from dojo_toolkit.utils import mock
 
 
 @mock.patch('dojo_toolkit.main.ArgumentParser')
