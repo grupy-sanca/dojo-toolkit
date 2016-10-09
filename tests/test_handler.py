@@ -1,16 +1,4 @@
-from dojo_toolkit.code_handler import DojoCodeHandler
-from dojo_toolkit.utils import mock
-
-
-def test_code_handler():
-    notifier = mock.Mock()
-    test_runner = mock.Mock()
-    sound_player = mock.Mock()
-    code_handler = DojoCodeHandler(notifier=notifier,
-                                   test_runner=test_runner,
-                                   sound_player=sound_player)
-    assert code_handler.notifier == notifier
-    assert code_handler.test_runner == test_runner
+from tests.conftest import mock
 
 
 def test_code_handler_get_last_test_run_interval(mocked_code_handler):
@@ -31,6 +19,12 @@ def test_code_handler_handle_fail(mocked_code_handler):
     mocked_code_handler.handle_fail()
 
     assert mocked_code_handler.notifier.fail.called
+
+
+def test_code_handler_handle_stopped_round(mocked_code_handler):
+    mocked_code_handler.handle_stopped_round()
+
+    assert mocked_code_handler.notifier.notify.called
 
 
 @mock.patch('dojo_toolkit.code_handler.DojoCodeHandler.handle_success')
