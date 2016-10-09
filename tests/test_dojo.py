@@ -32,6 +32,22 @@ def test_dojo_dojo(input, mocked_dojo):
         mocked_dojo.dojo()
 
 
+@mock.patch('six.moves.input')
+def test_dojo_dojo_timer_running(input, mocked_dojo):
+    mocked_dojo.is_running = True
+    mocked_dojo.timer.is_running = True
+
+    def stop_dojo():
+        mocked_dojo.is_running = False
+
+    def stop_timer():
+        mocked_dojo.timer.is_running = False
+
+    mocked_dojo.round_info = mock.Mock(side_effect=stop_timer)
+    mocked_dojo.round_finished = mock.Mock(side_effect=stop_dojo)
+    mocked_dojo.dojo()
+
+
 def test_dojo_dojo_stopped(mocked_dojo):
     mocked_dojo.is_running = False
     mocked_dojo.dojo()
