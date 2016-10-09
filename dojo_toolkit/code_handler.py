@@ -10,6 +10,7 @@ class DojoCodeHandler(PatternMatchingEventHandler):
     min_test_time_interval = 2
 
     def __init__(self, *args, **kwargs):
+        self.dojo = kwargs.pop('dojo')
         self.notifier = kwargs.pop('notifier')
         self.test_runner = kwargs.pop('test_runner')
         self.sound_player = kwargs.pop('sound_player')
@@ -29,12 +30,19 @@ class DojoCodeHandler(PatternMatchingEventHandler):
     def handle_fail(self):
         self.notifier.fail('NOT OK TO TALK')
 
+    def handle_stopped_round(self):
+        self.notifier.notify('Round has not been started')
+        print('Press <Enter> to start the round')
+
     def on_modified(self, event):
         """Called when a file in the dojo directory is modified
         runs the doctest and display a notification
         Green for 'ok to talk, test passing'
         Red for 'not ok to talk, test failing'
         """
+
+        if not self.dojo.round_started:
+            self.handle_stopped_round()
 
         if self.get_last_test_run_interval() < self.min_test_time_interval:
             return

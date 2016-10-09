@@ -21,7 +21,8 @@ class Dojo:
         self.test_runner = test_runner or DoctestTestRunner(code_path=code_path)
         self.sound_player = mock.Mock() if mute else SoundHandler()
 
-        self.event_handler = DojoCodeHandler(notifier=self.notifier,
+        self.event_handler = DojoCodeHandler(dojo=self,
+                                             notifier=self.notifier,
                                              test_runner=self.test_runner,
                                              sound_player=self.sound_player)
         self.observer = Observer()
@@ -50,6 +51,7 @@ class Dojo:
     def round_start(self):
         self.timer.start()
         self.sound_player.play_start()
+        self.round_started = True
 
     def round_info(self):
         if self.timer.ellapsed_time == 60:
@@ -59,6 +61,7 @@ class Dojo:
     def round_finished(self):
         self.notifier.notify('Time Up', timeout=15 * 1000)
         self.sound_player.play_timeup()
+        self.round_started = False
 
     def dojo(self):
         while self.is_running:
