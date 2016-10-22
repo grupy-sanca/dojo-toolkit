@@ -1,3 +1,4 @@
+import time
 from threading import Thread
 
 from six import moves
@@ -58,9 +59,10 @@ class Dojo:
         print('Round started! {} minutes left...'.format(self.round_time))
 
     def round_info(self):
-        if self.timer.ellapsed_time == 60:
-            self.notifier.notify('60 seconds...')
-            print('Round finished in 60 seconds')
+        if self.timer.ellapsed_time == self.timer.duration - 60:
+            self.notifier.notify('60 seconds to round finish...')
+            print('Round is going to finish in 60 seconds')
+            self.info_notified = True
 
     def round_finished(self):
         self.notifier.notify('Time Up', timeout=15 * 1000)
@@ -74,4 +76,5 @@ class Dojo:
             self.round_start()
             while self.timer.is_running:
                 self.round_info()
+                time.sleep(0.8)
             self.round_finished()
