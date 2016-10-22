@@ -46,12 +46,16 @@ class Dojo:
         self.is_running = False
 
     def await_pilot_exchange(self):
+        print('Awaiting the pilot and co-pilot to enter their positions.')
+        print('Press <Enter> when they are ready')
         moves.input()
 
     def round_start(self):
         self.timer.start()
         self.sound_player.play_start()
         self.round_started = True
+
+        print('Round started! {} minutes left...'.format(self.round_time))
 
     def round_info(self):
         if self.timer.ellapsed_time == 60:
@@ -62,15 +66,12 @@ class Dojo:
         self.notifier.notify('Time Up', timeout=15 * 1000)
         self.sound_player.play_timeup()
         self.round_started = False
+        print('Round finished!\n')
 
     def dojo(self):
         while self.is_running:
-            print('Awaiting the pilot and co-pilot to enter their positions.')
-            print('Press <Enter> when they are ready')
             self.await_pilot_exchange()
             self.round_start()
-            print('Round started! {} minutes left...'.format(self.round_time))
             while self.timer.is_running:
                 self.round_info()
             self.round_finished()
-            print('Round finished!')
