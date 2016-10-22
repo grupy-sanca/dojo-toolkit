@@ -1,7 +1,7 @@
 Contributing to Dojo Toolkit
 ============================
 
-Dojo Toolkit is an open source projects. We welcome many type of contributions:
+Dojo Toolkit is an open source project. We welcome many kinds of contributions:
 
 - Code patches (pull requests) and reviews
 - Documentation improvements
@@ -21,9 +21,8 @@ Join the channel #opensource. There we discuss dojo-toolkit development among ot
 How to Setup Git
 ----------------
 
-The `django contributing docs`__ has a nice and small tutorial explaining how to
-install and setup a local repository and working with github.
-
+The `django contributing docs`__ has a nice and small tutorial explaining how to install and setup a local repository and working with github.
+ 
 __ https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/working-with-git/#working-with-git-and-github
 
 
@@ -49,11 +48,11 @@ How to Run Dojo-Toolkit for development
 Done :-)
 
 
-How to Run Tests
+How to Run Dojo-Toolkit Tests
 ----------------
 ::
 
-  $ pip install -r -U requirements-test.txt
+  $ pip install -r requirements-test.txt
   $ py.test
 
 
