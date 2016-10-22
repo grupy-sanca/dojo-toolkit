@@ -71,6 +71,7 @@ def test_dojo_round_info_without_notification(mocked_dojo):
 
 
 def test_dojo_round_info_with_notification(mocked_dojo):
+    mocked_dojo.timer.duration = 120
     mocked_dojo.timer.ellapsed_time = 60
     mocked_dojo.round_info()
     assert mocked_dojo.notifier.notify.called
