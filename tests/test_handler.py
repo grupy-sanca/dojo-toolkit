@@ -1,6 +1,5 @@
-from tests.conftest import mock
-
 from dojo_toolkit.code_handler import DojoCodeHandler
+from dojo_toolkit.utils import mock
 
 
 def test_code_handler():

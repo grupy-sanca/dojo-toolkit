@@ -1,6 +1,6 @@
 import os
 
-from tests.conftest import mock
+from .utils import mock
 
 # workaround to tests run on travis
 try:
