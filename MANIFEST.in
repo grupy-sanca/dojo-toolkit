@@ -1,2 +1,3 @@
 include *.txt
 include dojo_toolkit/assets/*.jpg
+include dojo_toolkit/assets/sounds/*.wav

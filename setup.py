@@ -4,11 +4,6 @@ from setuptools import setup, find_packages
 with open("requirements.txt") as reqs:
     install_requires = reqs.readlines()
 
-
-package_data = {
-    'dojo_toolkit': ['assets/*.jpg', 'assets/sounds/*.wav'],
-}
-
 setup(
     name="dojo-toolkit",
     version="0.4.2",
@@ -23,7 +18,7 @@ setup(
 
     install_requires=install_requires,
 
-    package_data=package_data,
+    include_package_data=True,
 
     entry_points={
         'console_scripts': [
