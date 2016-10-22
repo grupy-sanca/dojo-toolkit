@@ -3,7 +3,7 @@ import os
 import pyglet
 
 from .settings import SOUNDS_DIR
-from tests.conftest import mock
+from .utils import mock
 
 
 class SoundHandler:
