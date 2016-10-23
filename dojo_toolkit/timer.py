@@ -3,7 +3,7 @@ from threading import Thread
 import time
 
 
-class Timer:
+class Timer(object):
     """
     A timer that runs on a separated thread and "ticks" every second. It
     keeps track of the ellapsed time.

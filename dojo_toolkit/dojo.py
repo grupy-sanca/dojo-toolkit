@@ -12,7 +12,7 @@ from dojo_toolkit.timer import Timer
 from dojo_toolkit.utils import mock
 
 
-class Dojo:
+class Dojo(object):
     ROUND_TIME = 5
 
     def __init__(self, code_path, round_time=None, mute=False, test_runner=None):
