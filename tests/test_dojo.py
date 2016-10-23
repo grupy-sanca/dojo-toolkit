@@ -9,7 +9,7 @@ def mocked_dojo():
     with mock.patch('dojo_toolkit.dojo.Observer'), \
             mock.patch('dojo_toolkit.dojo.Timer'), \
             mock.patch('dojo_toolkit.dojo.SoundHandler'):
-        return Dojo('/foo/bar', notifier=mock.Mock(), test_runner=mock.Mock())
+        return Dojo('/foo/bar', test_runner=mock.Mock())
 
 
 @mock.patch('dojo_toolkit.dojo.Thread')
@@ -65,21 +65,24 @@ def test_dojo_round_start(mocked_dojo):
     assert mocked_dojo.sound_player.play_start.called
 
 
-def test_dojo_round_info_without_notification(mocked_dojo):
+@mock.patch('dojo_toolkit.dojo.notifier')
+def test_dojo_round_info_without_notification(notifier, mocked_dojo):
     mocked_dojo.round_info()
-    assert not mocked_dojo.notifier.notify.called
+    assert not notifier.notify.called
 
 
-def test_dojo_round_info_with_notification(mocked_dojo):
+@mock.patch('dojo_toolkit.dojo.notifier')
+def test_dojo_round_info_with_notification(notifier, mocked_dojo):
     mocked_dojo.timer.duration = 120
     mocked_dojo.timer.ellapsed_time = 60
     mocked_dojo.round_info()
-    assert mocked_dojo.notifier.notify.called
+    assert notifier.notify.called
 
 
-def test_dojo_round_finished(mocked_dojo):
+@mock.patch('dojo_toolkit.dojo.notifier')
+def test_dojo_round_finished(notifier, mocked_dojo):
     mocked_dojo.round_finished()
-    assert mocked_dojo.notifier.notify.called
+    assert notifier.notify.called
     assert mocked_dojo.sound_player.play_timeup.called
 
 

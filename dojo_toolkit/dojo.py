@@ -58,7 +58,7 @@ class Dojo(object):
 
     def round_info(self):
         if self.timer.ellapsed_time == self.timer.duration - 60:
-            self.notifier.notify('60 seconds to round finish...')
+            notifier.notify('60 seconds to round finish...')
             print('Round is going to finish in 60 seconds')
             self.info_notified = True
 

@@ -1,5 +1,6 @@
 import time
 
+from dojo_toolkit.notifier import notifier
 from watchdog.events import PatternMatchingEventHandler
 
 
@@ -21,7 +22,7 @@ class DojoCodeHandler(PatternMatchingEventHandler):
         return time.time() - self.last_test_run_time
 
     def handle_stopped_round(self):
-        self.notifier.notify('Round has not been started')
+        notifier.notify('Round has not been started')
         print('Press <Enter> to start the round')
 
     def on_modified(self, event):
