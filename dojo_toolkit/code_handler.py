@@ -11,9 +11,7 @@ class DojoCodeHandler(PatternMatchingEventHandler):
 
     def __init__(self, *args, **kwargs):
         self.dojo = kwargs.pop('dojo')
-        self.notifier = kwargs.pop('notifier')
         self.test_runner = kwargs.pop('test_runner')
-        self.sound_player = kwargs.pop('sound_player')
 
         super(DojoCodeHandler, self).__init__(*args, **kwargs)
 
@@ -21,14 +19,6 @@ class DojoCodeHandler(PatternMatchingEventHandler):
 
     def get_last_test_run_interval(self):
         return time.time() - self.last_test_run_time
-
-    def handle_success(self):
-        self.notifier.success('OK TO TALK')
-        self.sound_player.play_success()
-        print('Tests passed!')
-
-    def handle_fail(self):
-        self.notifier.fail('NOT OK TO TALK')
 
     def handle_stopped_round(self):
         self.notifier.notify('Round has not been started')
@@ -46,10 +36,6 @@ class DojoCodeHandler(PatternMatchingEventHandler):
 
         if self.get_last_test_run_interval() < self.min_test_time_interval:
             return
-
         self.last_test_run_time = time.time()
 
-        if self.test_runner.run():
-            self.handle_success()
-        else:
-            self.handle_fail()
+        self.test_runner.run()
