@@ -14,19 +14,19 @@ class SubprocessTestRunner(object):
     cmd = None
 
     def __init__(self, code_path, sound_player):
-        self._cmd = self.cmd.format(code_path)
+        self.cmd = self.cmd.format(code_path)
         self.sound_player = sound_player
 
     def run(self):
         """
         run a test cmd using subprocess
         """
-        process = Popen([self._cmd], shell=True, stdout=PIPE)
+        process = Popen([self.cmd], shell=True, stdout=PIPE)
         process.wait()
 
         success = process.returncode == 0
         self.handle_result(success)
-        print('\n'.join(process.stdout.readlines()))
+        print('\n'.join(str(line) for line in process.stdout.readlines()))
 
         return success
 
