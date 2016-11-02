@@ -80,3 +80,8 @@ def test_dojo_round_finished(mocked_dojo):
     mocked_dojo.round_finished()
     assert mocked_dojo.notifier.notify.called
     assert mocked_dojo.sound_player.play_timeup.called
+
+
+def test_dojo_stop(mocked_dojo):
+    mocked_dojo.stop()
+    assert mocked_dojo.is_running is False
