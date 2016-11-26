@@ -6,7 +6,7 @@ with open("requirements.txt") as reqs:
 
 setup(
     name="dojo-toolkit",
-    version="0.4.4",
+    version="0.4.5",
     url="https://github.com/grupy-sanca/dojo-toolkit",
 
     author="Grupy-Sanca",
