@@ -69,7 +69,7 @@ Changelog
 - Project improvements
 - Release to PyPI
 
-**0.1** (Initial version)
+**0.1**
 
 - Timer for managing rounds
 - Watch code folder and run doctests on changes
