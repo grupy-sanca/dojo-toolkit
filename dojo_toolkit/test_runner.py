@@ -1,32 +1,49 @@
 """
 Module for running tests like doctest and unittest
 """
-from subprocess import Popen
+from subprocess import Popen, PIPE
 
 
-class BaseTestRunner():
-    """
-    Base class to all test runners
-    """
-
-    def __init__(self, code_path):
-        self.code_path = code_path
+from .notifier import notifier
 
 
-class SubprocessTestRunner(BaseTestRunner):
+class SubprocessTestRunner(object):
     """
     Base class to all test runners that use subprocess module.
     """
-    cmd = ""
+    cmd = None
+
+    def __init__(self, code_path, sound_player):
+        self.cmd = self.cmd.format(code_path)
+        self.sound_player = sound_player
 
     def run(self):
         """
         run a test cmd using subprocess
         """
-        cmd = self.cmd.format(self.code_path)
-        process = Popen([cmd], shell=True)
+        process = Popen([self.cmd], shell=True, stdout=PIPE)
         process.wait()
-        return process.returncode == 0
+
+        success = process.returncode == 0
+        self.handle_result(success)
+        print('\n'.join(str(line) for line in process.stdout.readlines()))
+
+        return success
+
+    def handle_result(self, success):
+        if success:
+            self.handle_success()
+        else:
+            self.handle_failure()
+
+    def handle_success(self):
+        print('\nTests passed!\n')
+        notifier.success('OK TO TALK')
+        self.sound_player.play_success()
+
+    def handle_failure(self):
+        print('\nTests failed!\n')
+        notifier.fail('NOT OK TO TALK')
 
 
 class DoctestTestRunner(SubprocessTestRunner):

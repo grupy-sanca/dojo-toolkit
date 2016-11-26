@@ -5,35 +5,33 @@ from six import moves
 from watchdog.observers import Observer
 
 from dojo_toolkit.code_handler import DojoCodeHandler
-from dojo_toolkit.notifier import GnomeNotifier
+from dojo_toolkit.notifier import notifier
 from dojo_toolkit.sound_handler import SoundHandler
 from dojo_toolkit.test_runner import DoctestTestRunner
 from dojo_toolkit.timer import Timer
 from dojo_toolkit.utils import mock
 
 
-class Dojo:
+class Dojo(object):
     ROUND_TIME = 5
 
-    def __init__(self, code_path, round_time=None, mute=False, notifier=None, test_runner=None):
+    def __init__(self, code_path, round_time=None, mute=False, test_runner=None):
         self.code_path = code_path
         self.round_time = round_time or self.ROUND_TIME
-        self.notifier = notifier or GnomeNotifier()
-        self.test_runner = test_runner or DoctestTestRunner(code_path=code_path)
         self.sound_player = mock.Mock() if mute else SoundHandler()
 
-        self.event_handler = DojoCodeHandler(dojo=self,
-                                             notifier=self.notifier,
-                                             test_runner=self.test_runner,
-                                             sound_player=self.sound_player)
+        test_runner = test_runner or DoctestTestRunner(code_path=code_path,
+                                                       sound_player=self.sound_player)
+        event_handler = DojoCodeHandler(dojo=self, test_runner=test_runner)
+
         self.observer = Observer()
-        self.observer.schedule(self.event_handler, self.code_path, recursive=False)
+        self.observer.schedule(event_handler, self.code_path, recursive=False)
 
         self.timer = Timer(self.round_time)
 
     def start(self):
         self.observer.start()
-        print('\n\n\n\nWatching: {} folder'.format(self.code_path))
+        print('\nWatching: {} folder'.format(self.code_path))
 
         self.is_running = True
         print('Dojo toolkit started!')
@@ -60,12 +58,12 @@ class Dojo:
 
     def round_info(self):
         if self.timer.ellapsed_time == self.timer.duration - 60:
-            self.notifier.notify('60 seconds to round finish...')
+            notifier.notify('60 seconds to round finish...')
             print('Round is going to finish in 60 seconds')
             self.info_notified = True
 
     def round_finished(self):
-        self.notifier.notify('Time Up', timeout=15 * 1000)
+        notifier.notify('Time Up', timeout=15 * 1000)
         self.sound_player.play_timeup()
         self.round_started = False
         print('Round finished!\n')

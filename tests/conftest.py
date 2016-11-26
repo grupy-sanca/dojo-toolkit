@@ -6,8 +6,5 @@ from dojo_toolkit.utils import mock
 
 @pytest.fixture
 def mocked_code_handler():
-    code_handler = DojoCodeHandler(dojo=mock.Mock(),
-                                   notifier=mock.Mock(),
-                                   test_runner=mock.Mock(),
-                                   sound_player=mock.Mock())
+    code_handler = DojoCodeHandler(test_runner=mock.Mock(), dojo=mock.Mock())
     return code_handler

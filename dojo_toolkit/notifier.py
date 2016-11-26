@@ -47,3 +47,6 @@ class GnomeNotifier(BaseNotifier):
 
     def fail(self, message):
         self.notify(message, self.fail_img_path)
+
+
+notifier = GnomeNotifier()
