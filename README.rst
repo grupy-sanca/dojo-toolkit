@@ -43,7 +43,8 @@ Dependencies
 
 Roadmap
 -------
-**0.5.0**
+
+**0.5**
 
 TDB
 
@@ -51,24 +52,24 @@ TDB
 Changelog
 ---------
 
-**0.4.0**
+**0.4**
 
-- Tests + CI (above 95% coverage)
+- Tests + CI
 - Sound notifications
 - Minor bug fixes
 - Minor improvements
 
-**0.3.0**
+**0.3**
 
 - Major refactor
 - Uses bumpversion
 
-**0.2.0**
+**0.2**
 
 - Project improvements
 - Release to PyPI
 
-**0.1.0** (Initial version)
+**0.1** (Initial version)
 
 - Timer for managing rounds
 - Watch code folder and run doctests on changes
