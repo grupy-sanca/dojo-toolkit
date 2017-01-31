@@ -60,9 +60,13 @@ def test_dojo_await_pilot_exchange(six_input, mocked_dojo):
 
 
 def test_dojo_round_start(mocked_dojo):
+    assert mocked_dojo.round_started is False
+
     mocked_dojo.round_start()
+
     assert mocked_dojo.timer.start.called
     assert mocked_dojo.sound_player.play_start.called
+    assert mocked_dojo.round_started is True
 
 
 @mock.patch('dojo_toolkit.dojo.notifier')
@@ -81,9 +85,13 @@ def test_dojo_round_info_with_notification(notifier, mocked_dojo):
 
 @mock.patch('dojo_toolkit.dojo.notifier')
 def test_dojo_round_finished(notifier, mocked_dojo):
+    mocked_dojo.round_started = True
+
     mocked_dojo.round_finished()
+
     assert notifier.notify.called
     assert mocked_dojo.sound_player.play_timeup.called
+    assert mocked_dojo.round_started is False
 
 
 def test_dojo_stop(mocked_dojo):

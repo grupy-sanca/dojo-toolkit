@@ -14,6 +14,7 @@ from dojo_toolkit.utils import mock
 
 class Dojo(object):
     ROUND_TIME = 5
+    round_started = False
 
     def __init__(self, code_path, round_time=None, mute=False, test_runner=None):
         self.code_path = code_path
