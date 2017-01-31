@@ -22,7 +22,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'dojo=dojo_toolkit.main:main',
+            'dojo=dojo_toolkit.__main__:main',
         ]
     },
 

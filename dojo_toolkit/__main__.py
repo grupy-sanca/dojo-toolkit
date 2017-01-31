@@ -25,9 +25,13 @@ def parse_args():
     return parser.parse_args()
 
 
-if __name__ == "__main__":
+def main():
     args = parse_args()
     dojo = Dojo(code_path=args.path,
                 round_time=args.time,
                 mute=args.mute)
     dojo.start()
+
+
+if __name__ == "__main__":
+    main()
