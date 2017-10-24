@@ -14,8 +14,8 @@ __ https://github.com/grupy-sanca/dojo-toolkit/issues
 Asking For Help
 ---------------
 
-You can ask for help by joining grupy-sanca's Slack: http://grupy-sanca.herokuapp.com/
-Join the channel #opensource. There we discuss dojo-toolkit development among other things.
+You can ask for help by joining grupy-sanca's Telegram group @grupysanca or find us in our facebook page https://www.facebook.com/grupysanca/
+There we discuss dojo-toolkit development among other things.
 
 
 How to Setup Git
