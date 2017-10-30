@@ -45,11 +45,16 @@ How to Run Dojo-Toolkit for development
 
   $ (env) pip install -r requirements-test.txt
 
+
+4. Install locally
+::
+
+  $ (env) pip install -e .
+
 Done :-)
 
-
 How to Run Dojo-Toolkit Tests
-----------------
+-----------------------------
 ::
 
   $ pip install -r requirements-test.txt
