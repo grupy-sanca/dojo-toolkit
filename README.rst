@@ -28,6 +28,7 @@ How to use
   $ pip install dojo-toolkit
   $ dojo /path/to/code/directory/
 
+For detailed information about running from source: `CONTRIBUING.rst <https://github.com/grupy-sanca/dojo-toolkit/blob/master/CONTRIBUTING.rst>`_
 
 Contributing
 ------------
