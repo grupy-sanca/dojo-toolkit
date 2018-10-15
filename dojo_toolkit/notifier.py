@@ -5,7 +5,7 @@ from .utils import mock
 # workaround to tests run on travis
 try:
     from pgi.repository import Notify, GdkPixbuf
-except:
+except ImportError:
     Notify = mock.Mock()
     GdkPixbuf = mock.Mock()
 
