@@ -1,9 +1,9 @@
 """
 Module for running tests like doctest and unittest
 """
-from subprocess import Popen, PIPE, call
+import os
 
-from os import name
+from subprocess import Popen, PIPE, call
 
 from .notifier import notifier
 
@@ -27,7 +27,7 @@ class SubprocessTestRunner(object):
 
         success = process.returncode == 0
         self.handle_result(success)
-        if name == "nt":
+        if os.name == "nt":
             command = "cls"
         else:
             command = "clear"
