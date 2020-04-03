@@ -1,5 +1,6 @@
 import time
 from threading import Thread
+from unittest import mock
 
 from six import moves
 from watchdog.observers import Observer
@@ -9,7 +10,6 @@ from dojo_toolkit.notifier import notifier
 from dojo_toolkit.sound_handler import SoundHandler
 from dojo_toolkit.test_runner import DoctestTestRunner
 from dojo_toolkit.timer import Timer
-from dojo_toolkit.utils import mock
 
 
 class Dojo(object):

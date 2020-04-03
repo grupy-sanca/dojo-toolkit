@@ -1,6 +1,7 @@
 import os
+from unittest import mock
 
-from .utils import mock
+from .settings import ASSETS_DIR
 
 # workaround to tests run on travis
 try:
@@ -9,7 +10,6 @@ except ImportError:
     Notify = mock.Mock()
     GdkPixbuf = mock.Mock()
 
-from .settings import ASSETS_DIR
 
 
 class BaseNotifier(object):

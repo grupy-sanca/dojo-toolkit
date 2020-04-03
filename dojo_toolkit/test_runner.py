@@ -2,8 +2,7 @@
 Module for running tests like doctest and unittest
 """
 import os
-
-from subprocess import Popen, PIPE, call
+from subprocess import PIPE, Popen, call
 
 from .notifier import notifier
 

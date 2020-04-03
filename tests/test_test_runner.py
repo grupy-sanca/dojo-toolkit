@@ -1,9 +1,9 @@
 import os
+from unittest import mock
 
 import pytest
 
-from dojo_toolkit.test_runner import SubprocessTestRunner, DoctestTestRunner
-from dojo_toolkit.utils import mock
+from dojo_toolkit.test_runner import DoctestTestRunner, SubprocessTestRunner
 
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 
