@@ -1,7 +1,8 @@
+from unittest import mock
+
 import pytest
 
 from dojo_toolkit.sound_handler import SoundHandler
-from dojo_toolkit.utils import mock
 
 
 @pytest.fixture

@@ -1,6 +1,6 @@
+import time
 from math import floor
 from threading import Thread
-import time
 
 
 class Timer(object):

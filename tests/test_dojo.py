@@ -1,7 +1,8 @@
+from unittest import mock
+
 import pytest
 
 from dojo_toolkit.dojo import Dojo  # NOQA
-from dojo_toolkit.utils import mock
 
 
 @pytest.fixture

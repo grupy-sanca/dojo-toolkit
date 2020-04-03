@@ -1,12 +1,11 @@
-from setuptools import setup, find_packages
-
+from setuptools import find_packages, setup
 
 with open("requirements.txt") as reqs:
     install_requires = reqs.readlines()
 
 setup(
     name="dojo-toolkit",
-    version="0.4.7",
+    version="0.5.0",
     url="https://github.com/grupy-sanca/dojo-toolkit",
 
     author="Grupy-Sanca",
@@ -29,6 +28,8 @@ setup(
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
 )

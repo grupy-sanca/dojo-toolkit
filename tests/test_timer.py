@@ -1,7 +1,8 @@
+from unittest import mock
+
 import pytest
 
 from dojo_toolkit.timer import Timer
-from dojo_toolkit.utils import mock
 
 
 @pytest.fixture

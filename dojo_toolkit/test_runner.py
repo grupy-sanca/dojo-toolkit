@@ -1,8 +1,8 @@
 """
 Module for running tests like doctest and unittest
 """
-from subprocess import Popen, PIPE
-
+import os
+from subprocess import PIPE, Popen, call
 
 from .notifier import notifier
 
@@ -21,11 +21,16 @@ class SubprocessTestRunner(object):
         """
         run a test cmd using subprocess
         """
-        process = Popen([self.cmd], shell=True, stdout=PIPE)
+        process = Popen([self.cmd], shell=True, stdout=PIPE, universal_newlines=True)
         process.wait()
 
         success = process.returncode == 0
         self.handle_result(success)
+        if os.name == "nt":
+            command = "cls"
+        else:
+            command = "clear"
+        tmp = call(command, shell=True)  # noqa
         print('\n'.join(str(line) for line in process.stdout.readlines()))
 
         return success

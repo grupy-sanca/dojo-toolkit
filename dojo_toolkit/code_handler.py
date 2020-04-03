@@ -1,7 +1,8 @@
 import time
 
-from dojo_toolkit.notifier import notifier
 from watchdog.events import PatternMatchingEventHandler
+
+from dojo_toolkit.notifier import notifier
 
 
 class DojoCodeHandler(PatternMatchingEventHandler):
