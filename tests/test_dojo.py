@@ -14,7 +14,7 @@ def mocked_dojo():
 
 
 @mock.patch('dojo_toolkit.dojo.Thread')
-@mock.patch('six.moves.input')
+@mock.patch('dojo_toolkit.dojo.input')
 def test_dojo_start(input, thread, mocked_dojo):
     mocked_dojo.start()
 
@@ -24,7 +24,7 @@ def test_dojo_start(input, thread, mocked_dojo):
     assert mocked_dojo.observer.join.called
 
 
-@mock.patch('six.moves.input')
+@mock.patch('dojo_toolkit.dojo.input')
 def test_dojo_dojo(input, mocked_dojo):
     mocked_dojo.is_running = True
     mocked_dojo.timer.is_running = False
@@ -33,7 +33,7 @@ def test_dojo_dojo(input, mocked_dojo):
         mocked_dojo.dojo()
 
 
-@mock.patch('six.moves.input')
+@mock.patch('dojo_toolkit.dojo.input')
 def test_dojo_dojo_timer_running(input, mocked_dojo):
     mocked_dojo.is_running = True
     mocked_dojo.timer.is_running = True
@@ -54,7 +54,7 @@ def test_dojo_dojo_stopped(mocked_dojo):
     mocked_dojo.dojo()
 
 
-@mock.patch('six.moves.input')
+@mock.patch('dojo_toolkit.dojo.input')
 def test_dojo_await_pilot_exchange(six_input, mocked_dojo):
     mocked_dojo.await_pilot_exchange()
     assert six_input.called

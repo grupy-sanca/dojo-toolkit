@@ -2,7 +2,6 @@ import time
 from threading import Thread
 from unittest import mock
 
-from six import moves
 from watchdog.observers import Observer
 
 from dojo_toolkit.code_handler import DojoCodeHandler
@@ -48,7 +47,7 @@ class Dojo(object):
     def await_pilot_exchange(self):
         print('Awaiting the pilot and co-pilot to enter their positions.')
         print('Press <Enter> when they are ready')
-        moves.input()
+        input()
 
     def round_start(self):
         self.timer.start()
