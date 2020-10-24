@@ -14,14 +14,14 @@ class SubprocessTestRunner(object):
     cmd = None
 
     def __init__(self, code_path, sound_player):
-        self.cmd = self.cmd.format(code_path)
+        self.code_path = code_path
         self.sound_player = sound_player
 
     def run(self):
         """
         run a test cmd using subprocess
         """
-        process = Popen([self.cmd], shell=True, stdout=PIPE, universal_newlines=True)
+        process = Popen([self.cmd, self.code_path], shell=True, stdout=PIPE, universal_newlines=True)
         process.wait()
 
         success = process.returncode == 0
@@ -55,4 +55,4 @@ class DoctestTestRunner(SubprocessTestRunner):
     """
     Subprocess doctest runner
     """
-    cmd = "python -m doctest {}/*.py"
+    cmd = "python -m doctest"
