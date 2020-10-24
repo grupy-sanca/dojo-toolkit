@@ -13,7 +13,6 @@ except ImportError:
     GdkPixbuf = mock.Mock()
 
 
-
 class BaseNotifier(object):
     def __init__(self):
         self.fail_img_path = os.path.join(ASSETS_DIR, 'r.jpg')
