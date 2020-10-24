@@ -5,7 +5,9 @@ from .settings import ASSETS_DIR
 
 # workaround to tests run on travis
 try:
-    from pgi.repository import Notify, GdkPixbuf
+    import gi
+    gi.require_version('Notify', '0.7')
+    from gi.repository import Notify, GdkPixbuf
 except ImportError:
     Notify = mock.Mock()
     GdkPixbuf = mock.Mock()
