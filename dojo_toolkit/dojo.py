@@ -11,7 +11,7 @@ from dojo_toolkit.test_runner import DoctestTestRunner
 from dojo_toolkit.timer import Timer
 
 
-class Dojo():
+class Dojo:
     ROUND_TIME = 5
     round_started = False
 
