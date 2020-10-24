@@ -19,3 +19,7 @@ build: clean
 
 lint:
 	flake8 dojo_toolkit tests --max-line-length 110
+
+test: lint
+	pytest
+	
