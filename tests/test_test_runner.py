@@ -14,7 +14,7 @@ def code_path():
 
 
 class MockTestRunner(SubprocessTestRunner):
-    cmd = "echo '{}'"
+    cmd = "echo"
 
 
 @pytest.fixture
@@ -23,7 +23,7 @@ def mock_test_runner(code_path):
 
 
 class WrongTestRunner(DoctestTestRunner):
-    cmd = "parangaricutirimicuaro '{}'"
+    cmd = "parangaricutirimicuaro"
 
 
 @pytest.fixture
@@ -37,7 +37,6 @@ def test_mock(notifier, mock_test_runner, code_path):
     """
     test SubprocessTestRunner when cmd not fail
     """
-    assert code_path in mock_test_runner.cmd
     assert 'echo' in mock_test_runner.cmd
     assert mock_test_runner.run()
 
@@ -47,6 +46,5 @@ def test_mock_fail(notifier, wrong_test_runner, code_path):
     """
     test SubprocessTestRunner when cmd fail
     """
-    assert code_path in wrong_test_runner.cmd
     assert 'parangaricutirimicuaro' in wrong_test_runner.cmd
     assert not wrong_test_runner.run()

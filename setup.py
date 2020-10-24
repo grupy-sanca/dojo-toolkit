@@ -16,6 +16,8 @@ setup(
     packages=find_packages(),
 
     install_requires=install_requires,
+    
+    extras_require={"gtk": ["pgi==0.0.11.1"]},
 
     include_package_data=True,
 

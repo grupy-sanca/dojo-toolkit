@@ -16,3 +16,10 @@ clean-build:
 
 build: clean
 	python setup.py sdist
+
+lint:
+	flake8 dojo_toolkit tests --max-line-length 110
+
+test: lint
+	pytest
+	
