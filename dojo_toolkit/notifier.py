@@ -13,7 +13,7 @@ except ImportError:
     GdkPixbuf = mock.Mock()
 
 
-class BaseNotifier(object):
+class BaseNotifier:
     def __init__(self):
         self.fail_img_path = os.path.join(ASSETS_DIR, 'r.jpg')
         self.success_img_path = os.path.join(ASSETS_DIR, 'g.jpg')
@@ -25,7 +25,7 @@ class BaseNotifier(object):
         raise NotImplementedError()
 
 
-class GnomeNotifier(BaseNotifier):
+class GnomeNotifier:
     def __init__(self):
         super(GnomeNotifier, self).__init__()
 
