@@ -23,10 +23,24 @@ Features
 
 How to use
 ----------
+
+Installation:
 ::
 
   $ pip install dojo-toolkit
+
+
+If you use GTK you can install dojo-toolkit with desktop notification support:
+::
+
+  $ pip install dojo-toolkit[gtk]
+
+
+Running:
+::
+
   $ dojo /path/to/code/directory/
+
 
 For detailed information about running from source: `CONTRIBUING.rst <https://github.com/grupy-sanca/dojo-toolkit/blob/master/CONTRIBUTING.rst>`_
 
