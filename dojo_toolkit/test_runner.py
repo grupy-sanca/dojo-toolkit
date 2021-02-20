@@ -7,7 +7,7 @@ from subprocess import PIPE, Popen, call
 from .notifier import notifier
 
 
-class SubprocessTestRunner(object):
+class SubprocessTestRunner:
     """
     Base class to all test runners that use subprocess module.
     """
@@ -21,7 +21,12 @@ class SubprocessTestRunner(object):
         """
         run a test cmd using subprocess
         """
-        process = Popen([self.cmd, self.code_path], shell=True, stdout=PIPE, universal_newlines=True)
+        process = Popen(
+            [self.cmd, self.code_path],
+            shell=True,
+            stdout=PIPE,
+            universal_newlines=True,
+        )
         process.wait()
 
         success = process.returncode == 0

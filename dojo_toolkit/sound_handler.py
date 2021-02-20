@@ -5,7 +5,7 @@ import pyglet
 from .settings import SOUNDS_DIR
 
 
-class SoundHandler():
+class SoundHandler:
     def __init__(self):
         self.player = pyglet.media.Player()
 

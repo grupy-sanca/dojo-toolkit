@@ -25,7 +25,7 @@ class BaseNotifier:
         raise NotImplementedError()
 
 
-class GnomeNotifier:
+class GnomeNotifier(BaseNotifier):
     def __init__(self):
         super(GnomeNotifier, self).__init__()
 
