@@ -1,3 +1,15 @@
+aiohttp==3.7.3
+async-timeout==3.0.1
+attrs==20.3.0
+bump2version==1.0.1
+bumpversion==0.6.0
+chardet==3.0.4
+discord.py==1.6.0
+idna==3.1
+multidict==5.1.0
+pathtools==0.1.2
 pgi==0.0.11.1
-watchdog==0.10.3
 pyglet==1.2.4
+typing-extensions==3.7.4.3
+watchdog==0.10.3
+yarl==1.6.3
