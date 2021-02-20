@@ -21,11 +21,14 @@ class Dojo:
         self.sound_player = mock.Mock() if mute else SoundHandler()
 
         if discord:
-            test_runner = test_runner or DoctestTestRunnerSendDiscord(code_path=code_path,
-                                                                      sound_player=self.sound_player)
+            test_runner = test_runner or DoctestTestRunnerSendDiscord(
+                code_path=code_path, sound_player=self.sound_player
+            )
         else:
-            test_runner = test_runner or DoctestTestRunner(code_path=code_path,
-                                                           sound_player=self.sound_player)
+            test_runner = test_runner or DoctestTestRunner(
+                code_path=code_path, sound_player=self.sound_player
+            )
+
         event_handler = DojoCodeHandler(dojo=self, test_runner=test_runner)
 
         self.observer = Observer()
