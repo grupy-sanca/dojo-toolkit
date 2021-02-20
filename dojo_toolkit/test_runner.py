@@ -1,13 +1,14 @@
 """
 Module for running tests like doctest and unittest
 """
+from abc import ABC, abstractmethod
 import os
 from subprocess import PIPE, Popen, call
 
 from .notifier import notifier
 
 
-class SubprocessTestRunner:
+class SubprocessTestRunner(ABC):
     """
     Base class to all test runners that use subprocess module.
     """
