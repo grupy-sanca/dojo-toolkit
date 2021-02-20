@@ -3,7 +3,7 @@ from unittest import mock
 
 import pytest
 
-from dojo_toolkit.test_runner import DoctestTestRunner, SubprocessTestRunner
+from dojo_toolkit.test_runner import DoctestTestRunner
 
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -13,7 +13,7 @@ def code_path():
     return "/path/to/my/code"
 
 
-class MockTestRunner(SubprocessTestRunner):
+class MockTestRunner(DoctestTestRunner):
     cmd = "echo"
 
 
