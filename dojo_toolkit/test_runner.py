@@ -66,3 +66,6 @@ class DoctestTestRunner(SubprocessTestRunner):
     Subprocess doctest runner
     """
     cmd = "python -m doctest"
+
+    def handle_terminal_output(self, output_string):
+        print(output_string)
