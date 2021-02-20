@@ -20,7 +20,10 @@ def parse_args():
                         type=os.path.realpath)
     parser.add_argument("--mute",
                         help="mute all sounds (default: all sounds are played)",
-                        action='store_true')
+                        action="store_true")
+    parser.add_argument("--discord",
+                        help="run the discord bot to receive the terminal output",
+                        action="store_true")
 
     return parser.parse_args()
 
@@ -29,7 +32,8 @@ def main():
     args = parse_args()
     dojo = Dojo(code_path=args.path,
                 round_time=args.time,
-                mute=args.mute)
+                mute=args.mute,
+                discord=args.discord)
     dojo.start()
 
 

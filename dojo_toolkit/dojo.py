@@ -15,7 +15,7 @@ class Dojo:
     ROUND_TIME = 5
     round_started = False
 
-    def __init__(self, code_path, round_time=None, mute=False, test_runner=None):
+    def __init__(self, code_path, round_time=None, mute=False, test_runner=None, discord=False):
         self.code_path = code_path
         self.round_time = round_time or self.ROUND_TIME
         self.sound_player = mock.Mock() if mute else SoundHandler()
