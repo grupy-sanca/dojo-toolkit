@@ -69,3 +69,20 @@ class DoctestTestRunner(SubprocessTestRunner):
 
     def handle_terminal_output(self, output_string):
         print(output_string)
+
+
+class DoctestTestRunnerSendDiscord(SubprocessTestRunner):
+    """
+    Subprocess doctest runner and send the string result in the discord
+    """
+    cmd = "python -m doctest"
+
+    def __init__(self, code_path, sound_player):
+        super().__init__(code_path, sound_player)
+        # from .discord_handler import client, send_message
+
+    def handle_terminal_output(self, output_string):
+        """
+        Must be async to await the send_message
+        """
+        # await send_message(output_string)
