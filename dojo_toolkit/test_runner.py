@@ -37,7 +37,7 @@ class SubprocessTestRunner(ABC):
         else:
             command = "clear"
         tmp = call(command, shell=True)  # noqa
-        print('\n'.join(str(line) for line in process.stdout.readlines()))
+        self.handle_terminal_output('\n'.join(str(line) for line in process.stdout.readlines()))
 
         return success
 
@@ -55,6 +55,10 @@ class SubprocessTestRunner(ABC):
     def handle_failure(self):
         print('\nTests failed!\n')
         notifier.fail('NOT OK TO TALK')
+
+    @abstractmethod
+    def handle_terminal_output(self, output_string):
+        pass
 
 
 class DoctestTestRunner(SubprocessTestRunner):
