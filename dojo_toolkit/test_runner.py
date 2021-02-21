@@ -2,59 +2,49 @@
 Module for running tests like doctest and unittest
 """
 import os
-from subprocess import PIPE, Popen, call
+import subprocess
 
 from .notifier import notifier
 
 
-class SubprocessTestRunner:
-    """
-    Base class to all test runners that use subprocess module.
-    """
-    cmd = None
-
+class DoctestTestRunner:
     def __init__(self, code_path, sound_player):
         self.code_path = code_path
         self.sound_player = sound_player
 
     def run(self):
-        """
-        run a test cmd using subprocess
-        """
-        process = Popen(
-            [self.cmd, self.code_path],
-            shell=True,
-            stdout=PIPE,
-            universal_newlines=True,
+        result = self._run_doctest()
+        self._clear_screen()
+        self._handle_result(result['is_success'])
+        print(result['output'])
+        return result['is_success']
+
+    def _run_doctest(self):
+        result = subprocess.run(
+            ["python", "-m", "doctest", self.code_path],
+            capture_output=True
         )
-        process.wait()
 
-        is_success = process.returncode == 0
-        self.handle_result(is_success)
+        return {
+            'is_success': result.returncode == 0,
+            'output': result.stdout.decode('utf-8'),
+        }
+
+    def _clear_screen(self):
         command = "cls" if os.name == "nt" else "clear"
-        tmp = call(command, shell=True)  # noqa
-        print('\n'.join(str(line) for line in process.stdout.readlines()))
+        subprocess.call(command, shell=True)
 
-        return is_success
-
-    def handle_result(self, success):
+    def _handle_result(self, success):
         if success:
-            self.handle_success()
+            self._handle_success()
         else:
-            self.handle_failure()
+            self._handle_failure()
 
-    def handle_success(self):
+    def _handle_success(self):
         print('\nTests passed!\n')
         notifier.success('OK TO TALK')
         self.sound_player.play_success()
 
-    def handle_failure(self):
+    def _handle_failure(self):
         print('\nTests failed!\n')
         notifier.fail('NOT OK TO TALK')
-
-
-class DoctestTestRunner(SubprocessTestRunner):
-    """
-    Subprocess doctest runner
-    """
-    cmd = "python -m doctest"
