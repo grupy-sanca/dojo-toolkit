@@ -27,7 +27,7 @@ class DoctestTestRunner:
 
         return {
             'is_success': result.returncode == 0,
-            'output': '\n'.join(str(line) for line in result.stdout),
+            'output': result.stdout.decode('utf-8'),
         }
 
     def _clear_screen(self):
