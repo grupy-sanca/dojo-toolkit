@@ -7,49 +7,44 @@ import subprocess
 from .notifier import notifier
 
 
-def clear_screen():
-    command = "cls" if os.name == "nt" else "clear"
-    subprocess.call(command, shell=True)  # noqa
-
-
 class DoctestTestRunner:
-    """
-    Base class to all test runners that use subprocess module.
-    """
-
     def __init__(self, code_path, sound_player):
         self.code_path = code_path
         self.sound_player = sound_player
 
     def run(self):
-        """
-        run a test cmd using subprocess
-        """
+        result = self._run_doctest()
+        self._clear_screen()
+        self._handle_result(result['is_success'])
+        print(result['output'])
+        return result['is_success']
 
+    def _run_doctest(self):
         result = subprocess.run(
             ["python", "-m", "doctest", self.code_path],
             capture_output=True
         )
-        is_success = result.returncode == 0
 
-        clear_screen()
+        return {
+            'is_success': result.returncode == 0,
+            'output': '\n'.join(str(line) for line in result.stdout),
+        }
 
-        self.handle_result(is_success)
-        print('\n'.join(str(line) for line in result.stdout))
+    def _clear_screen(self):
+        command = "cls" if os.name == "nt" else "clear"
+        subprocess.call(command, shell=True)
 
-        return is_success
-
-    def handle_result(self, success):
+    def _handle_result(self, success):
         if success:
-            self.handle_success()
+            self._handle_success()
         else:
-            self.handle_failure()
+            self._handle_failure()
 
-    def handle_success(self):
+    def _handle_success(self):
         print('\nTests passed!\n')
         notifier.success('OK TO TALK')
         self.sound_player.play_success()
 
-    def handle_failure(self):
+    def _handle_failure(self):
         print('\nTests failed!\n')
         notifier.fail('NOT OK TO TALK')
