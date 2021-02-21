@@ -34,7 +34,7 @@ class DojoCodeHandler(PatternMatchingEventHandler):
         """
 
         if not self.dojo.round_started:
-            self.handle_stopped_round()
+            return self.handle_stopped_round()
 
         if self.get_last_test_run_interval() < self.min_test_time_interval:
             return
