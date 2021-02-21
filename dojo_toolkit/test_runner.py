@@ -29,16 +29,13 @@ class SubprocessTestRunner:
         )
         process.wait()
 
-        success = process.returncode == 0
-        self.handle_result(success)
-        if os.name == "nt":
-            command = "cls"
-        else:
-            command = "clear"
+        is_success = process.returncode == 0
+        self.handle_result(is_success)
+        command = "cls" if os.name == "nt" else "clear"
         tmp = call(command, shell=True)  # noqa
         print('\n'.join(str(line) for line in process.stdout.readlines()))
 
-        return success
+        return is_success
 
     def handle_result(self, success):
         if success:
