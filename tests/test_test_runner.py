@@ -13,32 +13,24 @@ def code_path():
     return "/path/to/my/code"
 
 
-class MockTestRunner(DoctestTestRunner):
-    cmd = "echo"
+@mock.patch('dojo_toolkit.test_runner.notifier')
+def test_doctest_test_runner_cmd_success(notifier, code_path):
+    class MockTestRunner(DoctestTestRunner):
+        cmd = "echo"
+
+    test_runner = MockTestRunner(code_path, sound_player=mock.Mock())
+
+    assert 'echo' in test_runner.cmd
+    assert test_runner.run()
 
 
-@pytest.fixture
-def mock_test_runner(code_path):
-    return MockTestRunner(code_path, sound_player=mock.Mock())
+@mock.patch('dojo_toolkit.test_runner.notifier')
+def test_doctest_test_runner_cmd_fail(notifier, code_path):
+    class WrongTestRunner(DoctestTestRunner):
+        cmd = "parangaricutirimicuaro"
 
-
-class WrongTestRunner(DoctestTestRunner):
-    cmd = "parangaricutirimicuaro"
-
-
-@pytest.fixture
-def wrong_test_runner(code_path):
     with mock.patch('dojo_toolkit.test_runner.notifier'):
-        return WrongTestRunner(code_path, sound_player=mock.Mock())
+        test_runner = WrongTestRunner(code_path, sound_player=mock.Mock())
 
-
-@mock.patch('dojo_toolkit.test_runner.notifier')
-def test_doctest_test_runner_cmd_success(notifier, mock_test_runner, code_path):
-    assert 'echo' in mock_test_runner.cmd
-    assert mock_test_runner.run()
-
-
-@mock.patch('dojo_toolkit.test_runner.notifier')
-def test_doctest_test_runner_cmd_fail(notifier, wrong_test_runner, code_path):
-    assert 'parangaricutirimicuaro' in wrong_test_runner.cmd
-    assert not wrong_test_runner.run()
+    assert 'parangaricutirimicuaro' in test_runner.cmd
+    assert not test_runner.run()
