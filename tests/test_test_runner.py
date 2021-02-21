@@ -14,23 +14,17 @@ def code_path():
 
 
 @mock.patch('dojo_toolkit.test_runner.notifier')
-def test_doctest_test_runner_cmd_success(notifier, code_path):
-    class MockTestRunner(DoctestTestRunner):
-        cmd = "echo"
+def test_doctest_test_runner_real_file_cmd_success(notifier, tmpdir):
+    sound_player_mock = mock.Mock()
+    code_file = tmpdir.join('foo.py')
+    code = [
+        '"""',
+        '>>> 1 + 2',
+        '3',
+        '"""',
+    ]
+    code_file.write('\n'.join(code))
+    test_runner = DoctestTestRunner(code_path=str(code_file), sound_player=sound_player_mock)
 
-    test_runner = MockTestRunner(code_path, sound_player=mock.Mock())
-
-    assert 'echo' in test_runner.cmd
-    assert test_runner.run()
-
-
-@mock.patch('dojo_toolkit.test_runner.notifier')
-def test_doctest_test_runner_cmd_fail(notifier, code_path):
-    class WrongTestRunner(DoctestTestRunner):
-        cmd = "parangaricutirimicuaro"
-
-    with mock.patch('dojo_toolkit.test_runner.notifier'):
-        test_runner = WrongTestRunner(code_path, sound_player=mock.Mock())
-
-    assert 'parangaricutirimicuaro' in test_runner.cmd
-    assert not test_runner.run()
+    assert test_runner.run() is True
+    notifier.success.assert_called_once_with('OK TO TALK')
