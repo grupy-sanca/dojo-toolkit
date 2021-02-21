@@ -2,9 +2,14 @@
 Module for running tests like doctest and unittest
 """
 import os
-from subprocess import call
+import subprocess
 
 from .notifier import notifier
+
+
+def clear_screen():
+    command = "cls" if os.name == "nt" else "clear"
+    subprocess.call(command, shell=True)  # noqa
 
 
 class DoctestTestRunner:
@@ -20,17 +25,16 @@ class DoctestTestRunner:
         """
         run a test cmd using subprocess
         """
-        import subprocess
 
         result = subprocess.run(
             ["python", "-m", "doctest", self.code_path],
             capture_output=True
         )
-
         is_success = result.returncode == 0
+
+        clear_screen()
+
         self.handle_result(is_success)
-        command = "cls" if os.name == "nt" else "clear"
-        call(command, shell=True)  # noqa
         print('\n'.join(str(line) for line in result.stdout))
 
         return is_success
