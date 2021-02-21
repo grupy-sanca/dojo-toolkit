@@ -3,7 +3,7 @@ from unittest import mock
 
 import pytest
 
-from dojo_toolkit.test_runner import DoctestTestRunner, SubprocessTestRunner
+from dojo_toolkit.test_runner import DoctestTestRunner
 
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -13,7 +13,7 @@ def code_path():
     return "/path/to/my/code"
 
 
-class MockTestRunner(SubprocessTestRunner):
+class MockTestRunner(DoctestTestRunner):
     cmd = "echo"
 
 
@@ -33,18 +33,12 @@ def wrong_test_runner(code_path):
 
 
 @mock.patch('dojo_toolkit.test_runner.notifier')
-def test_mock(notifier, mock_test_runner, code_path):
-    """
-    test SubprocessTestRunner when cmd not fail
-    """
+def test_doctest_test_runner_cmd_success(notifier, mock_test_runner, code_path):
     assert 'echo' in mock_test_runner.cmd
     assert mock_test_runner.run()
 
 
 @mock.patch('dojo_toolkit.test_runner.notifier')
-def test_mock_fail(notifier, wrong_test_runner, code_path):
-    """
-    test SubprocessTestRunner when cmd fail
-    """
+def test_doctest_test_runner_cmd_fail(notifier, wrong_test_runner, code_path):
     assert 'parangaricutirimicuaro' in wrong_test_runner.cmd
     assert not wrong_test_runner.run()

@@ -7,11 +7,11 @@ from subprocess import PIPE, Popen, call
 from .notifier import notifier
 
 
-class SubprocessTestRunner:
+class DoctestTestRunner:
     """
     Base class to all test runners that use subprocess module.
     """
-    cmd = None
+    cmd = "python -m doctest"
 
     def __init__(self, code_path, sound_player):
         self.code_path = code_path
@@ -51,10 +51,3 @@ class SubprocessTestRunner:
     def handle_failure(self):
         print('\nTests failed!\n')
         notifier.fail('NOT OK TO TALK')
-
-
-class DoctestTestRunner(SubprocessTestRunner):
-    """
-    Subprocess doctest runner
-    """
-    cmd = "python -m doctest"
