@@ -21,13 +21,15 @@ class DoctestTestRunner:
 
     def _run_doctest(self):
         result = subprocess.run(
-            ["python", "-m", "doctest", self.code_path],
-            capture_output=True
+            ["python -m doctest " + self.code_path + "/*.py"],
+            capture_output=True,
+            shell=True,
+            encoding="utf-8"
         )
 
         return {
             'is_success': result.returncode == 0,
-            'output': result.stdout.decode('utf-8'),
+            'output': result.stdout,
         }
 
     def _clear_screen(self):
