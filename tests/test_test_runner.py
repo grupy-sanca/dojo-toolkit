@@ -24,7 +24,10 @@ def test_doctest_test_runner_real_file_cmd_success(notifier, code_file):
         '"""',
     ]
     code_file.write('\n'.join(code))
-    test_runner = DoctestTestRunner(code_path=str(code_file.dirpath()), sound_player=sound_player_mock)
+    test_runner = DoctestTestRunner(
+        code_path=str(code_file.dirpath()),
+        sound_player=sound_player_mock
+    )
 
     assert test_runner.run() is True
     notifier.success.assert_called_once_with('OK TO TALK')
@@ -40,7 +43,10 @@ def test_doctest_test_runner_real_file_cmd_fail(notifier, code_file):
         '"""',
     ]
     code_file.write('\n'.join(code))
-    test_runner = DoctestTestRunner(code_path=str(code_file.dirpath()), sound_player=sound_player_mock)
+    test_runner = DoctestTestRunner(
+        code_path=str(code_file.dirpath()),
+        sound_player=sound_player_mock
+    )
 
     assert test_runner.run() is False
     notifier.fail.assert_called_once_with('NOT OK TO TALK')
