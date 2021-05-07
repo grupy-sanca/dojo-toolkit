@@ -14,16 +14,19 @@ def code_file(tmpdir):
     return code_file
 
 
+def write_docstring(f, code):
+    code = docstringfy(code)
+    f.write(code)
+
+
 @mock.patch('dojo_toolkit.test_runner.notifier')
 def test_doctest_test_runner_real_file_cmd_success(notifier, code_file):
     sound_player_mock = mock.Mock()
-    code = [
-        '"""',
-        '>>> 1 + 2',
-        '3',
-        '"""',
-    ]
-    code_file.write('\n'.join(code))
+    code = """
+        >>> 1 + 2
+        3
+    """
+    write_docstring(code_file, code)
     test_runner = DoctestTestRunner(
         code_path=str(code_file.dirpath()),
         sound_player=sound_player_mock
@@ -33,33 +36,31 @@ def test_doctest_test_runner_real_file_cmd_success(notifier, code_file):
     notifier.success.assert_called_once_with('OK TO TALK')
 
 
+@mock.patch('builtins.print')
 @mock.patch('dojo_toolkit.test_runner.notifier')
-def test_doctest_test_runner_real_file_cmd_fail(notifier, code_file):
+def test_doctest_test_runner_real_file_cmd_fail(notifier_mock, print_mock, code_file):
     sound_player_mock = mock.Mock()
-    code = [
-        '"""',
-        '>>> 1 + 2',
-        '4',
-        '"""',
-    ]
-    code_file.write('\n'.join(code))
+    code = """
+        >>> 1 + 2
+        4
+    """
+    write_docstring(code_file, code)
     test_runner = DoctestTestRunner(
         code_path=str(code_file.dirpath()),
         sound_player=sound_player_mock
     )
 
     assert test_runner.run() is False
-    notifier.fail.assert_called_once_with('NOT OK TO TALK')
+    notifier_mock.fail.assert_called_once_with('NOT OK TO TALK')
+    assert print_mock.call_count == 2
 
 
 def test_doctest_test_runner_run_doctest_success(code_file):
-    code = [
-        '"""',
-        '>>> 1 + 2',
-        '3',
-        '"""',
-    ]
-    code_file.write('\n'.join(code))
+    code = """
+        >>> 1 + 2
+        3
+    """
+    write_docstring(code_file, code)
     test_runner = DoctestTestRunner(code_path=str(code_file.dirpath()), sound_player=None)
 
     result = test_runner._run_doctest()
@@ -68,14 +69,15 @@ def test_doctest_test_runner_run_doctest_success(code_file):
 
 
 def test_doctest_test_runner_run_doctest_fail(code_file):
-    code = [
-        '"""',
-        '>>> 1 + 2',
-        '4',
-        '"""',
-    ]
-    code_file.write('\n'.join(code))
-    test_runner = DoctestTestRunner(code_path=str(code_file.dirpath()), sound_player=None)
+    code = """
+        >>> 1 + 2
+        4
+    """
+    write_docstring(code_file, code)
+    test_runner = DoctestTestRunner(
+        code_path=str(code_file.dirpath()),
+        sound_player=None
+    )
 
     result = test_runner._run_doctest()
 
@@ -89,3 +91,21 @@ def test_doctest_test_runner_run_doctest_fail(code_file):
         "Got:",
         "    3",
     ]
+
+
+def docstringfy(code):
+    result = '"""\n'
+    lines = code.split('\n')
+    for line in lines[1:-1]:
+        result += line.strip() + '\n'
+    result += '"""'
+    return result
+
+
+def test_docstringfy():
+    code = """
+    >>> 1 + 2
+    3
+    """
+
+    assert docstringfy(code) == '"""\n>>> 1 + 2\n3\n"""'
