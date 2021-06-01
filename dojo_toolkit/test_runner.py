@@ -68,12 +68,11 @@ class DoctestTestRunner(LocalTestRunner):
 class PytestTestRunner(LocalTestRunner):
     def _run_doctest(self):
         result = subprocess.run(
-            ["python -m pytest -x" + self.code_path + "/*.py"],
+            ["python -m pytest " + self.code_path + "/*.py"],
             capture_output=True,
             shell=True,
             encoding="utf-8"
         )
-        breakpoint()
 
         return {
             'is_success': result.returncode == 0,
