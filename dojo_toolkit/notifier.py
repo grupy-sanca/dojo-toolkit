@@ -1,7 +1,7 @@
 import os
 from unittest import mock
 
-from .settings import ASSETS_DIR
+from dojo_toolkit.settings import ASSETS_DIR
 
 # workaround to tests run on travis
 try:

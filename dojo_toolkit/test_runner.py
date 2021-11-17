@@ -4,7 +4,9 @@ Module for running tests like doctest and unittest
 import os
 import subprocess
 
-from .notifier import notifier
+from clint.textui import colored
+
+from dojo_toolkit.notifier import notifier
 
 
 def get_test_runner(test_runner, runner, code_path, sound_player):
@@ -41,12 +43,12 @@ class LocalTestRunner:
             self._handle_failure()
 
     def _handle_success(self):
-        print("\nTests passed!\n")
+        print(getattr(colored, "green")("\nTests passed!\n"))
         notifier.success("OK TO TALK")
         self.sound_player.play_success()
 
     def _handle_failure(self):
-        print("\nTests failed!\n")
+        print(getattr(colored, "red")("\nTests failed!\n"))
         notifier.fail("NOT OK TO TALK")
 
 

@@ -2,6 +2,7 @@ import time
 from threading import Thread
 from unittest import mock
 
+from clint.textui import colored
 from watchdog.observers import Observer
 
 from dojo_toolkit.code_handler import DojoCodeHandler
@@ -59,7 +60,7 @@ class Dojo:
     def round_info(self):
         if self.timer.ellapsed_time == self.timer.duration - 60:
             notifier.notify("60 seconds to round finish...")
-            print("Round is going to finish in 60 seconds")
+            print((getattr(colored, "yellow"))("Round is going to finish in 60 seconds"))
             self.info_notified = True
 
     def round_finished(self):
