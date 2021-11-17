@@ -20,6 +20,7 @@ class Dojo:
         self.code_path = code_path
         self.round_time = round_time or self.ROUND_TIME
         self.sound_player = mock.Mock() if mute else SoundHandler()
+        self.info_notified = False
 
         test_runner = get_test_runner(test_runner, runner, self.code_path, self.sound_player)
 
@@ -54,11 +55,12 @@ class Dojo:
         self.timer.start()
         self.sound_player.play_start()
         self.round_started = True
+        self.info_notified = False
 
         print("Round started! {} minutes left...".format(self.round_time))
 
     def round_info(self):
-        if self.timer.ellapsed_time == self.timer.duration - 60:
+        if self.timer.ellapsed_time == self.timer.duration - 60 and not self.info_notified:
             notifier.notify("60 seconds to round finish...")
             print((getattr(colored, "yellow"))("Round is going to finish in 60 seconds"))
             self.info_notified = True
