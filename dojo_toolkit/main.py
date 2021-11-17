@@ -37,7 +37,3 @@ def main():
     args = parse_args()
     dojo = Dojo(code_path=args.path, round_time=args.time, mute=args.mute, runner=args.runner)
     dojo.start()
-
-
-if __name__ == "__main__":
-    main()
