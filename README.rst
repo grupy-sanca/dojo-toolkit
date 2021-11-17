@@ -1,8 +1,8 @@
 Dojo Toolkit
 ============
 
-.. image:: https://travis-ci.org/grupy-sanca/dojo-toolkit.svg?branch=master
-  :target: https://travis-ci.org/grupy-sanca/dojo-toolkit
+.. image:: https://github.com/grupy-sanca/dojo-toolkit/actions/workflows/test_push.yaml/badge.svg?branch=master
+  :target: https://github.com/grupy-sanca/dojo-toolkit/actions/workflows/test_push.yaml?query=branch%3Amaster
 
 .. image:: https://coveralls.io/repos/github/grupy-sanca/dojo-toolkit/badge.svg?branch=master
   :target: https://coveralls.io/github/grupy-sanca/dojo-toolkit?branch=master
@@ -30,12 +30,6 @@ Installation:
   $ pip install dojo-toolkit
 
 
-If you use GTK you can install dojo-toolkit with desktop notification support:
-::
-
-  $ pip install dojo-toolkit[gtk]
-
-
 Running:
 ::
 
@@ -43,6 +37,11 @@ Running:
 
 
 For detailed information about running from source: `CONTRIBUING.rst <https://github.com/grupy-sanca/dojo-toolkit/blob/master/CONTRIBUTING.rst>`_
+To see the options available use:
+::
+
+  $ dojo --help
+
 
 Contributing
 ------------

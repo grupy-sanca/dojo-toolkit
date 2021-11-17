@@ -10,8 +10,8 @@ def mocked_timer():
     return Timer(5)
 
 
-@mock.patch('dojo_toolkit.timer.Thread')
-@mock.patch('time.time')
+@mock.patch("dojo_toolkit.timer.Thread")
+@mock.patch("time.time")
 def test_timer_start(time, thread, mocked_timer):
     mocked_timer.start()
 
@@ -21,8 +21,8 @@ def test_timer_start(time, thread, mocked_timer):
     assert mocked_timer.thread.start.called
 
 
-@mock.patch('time.sleep')
-@mock.patch('time.time')
+@mock.patch("time.sleep")
+@mock.patch("time.time")
 def test_timer_timer(time, sleep, mocked_timer):
     time.return_value = 11
 

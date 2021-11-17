@@ -20,8 +20,9 @@ class Dojo:
         self.round_time = round_time or self.ROUND_TIME
         self.sound_player = mock.Mock() if mute else SoundHandler()
 
-        test_runner = test_runner or DoctestTestRunner(code_path=code_path,
-                                                       sound_player=self.sound_player)
+        test_runner = test_runner or DoctestTestRunner(
+            code_path=code_path, sound_player=self.sound_player
+        )
         event_handler = DojoCodeHandler(dojo=self, test_runner=test_runner)
 
         self.observer = Observer()
@@ -31,10 +32,10 @@ class Dojo:
 
     def start(self):
         self.observer.start()
-        print('\nWatching: {} folder'.format(self.code_path))
+        print("\nWatching: {} folder".format(self.code_path))
 
         self.is_running = True
-        print('Dojo toolkit started!')
+        print("Dojo toolkit started!")
         self.thread = Thread(target=self.dojo)
         self.thread.start()
 
@@ -45,8 +46,8 @@ class Dojo:
         self.is_running = False
 
     def await_pilot_exchange(self):
-        print('Awaiting the pilot and co-pilot to enter their positions.')
-        print('Press <Enter> when they are ready')
+        print("Awaiting the pilot and co-pilot to enter their positions.")
+        print("Press <Enter> when they are ready")
         input()
 
     def round_start(self):
@@ -54,19 +55,19 @@ class Dojo:
         self.sound_player.play_start()
         self.round_started = True
 
-        print('Round started! {} minutes left...'.format(self.round_time))
+        print("Round started! {} minutes left...".format(self.round_time))
 
     def round_info(self):
         if self.timer.ellapsed_time == self.timer.duration - 60:
-            notifier.notify('60 seconds to round finish...')
-            print('Round is going to finish in 60 seconds')
+            notifier.notify("60 seconds to round finish...")
+            print("Round is going to finish in 60 seconds")
             self.info_notified = True
 
     def round_finished(self):
-        notifier.notify('Time Up', timeout=15 * 1000)
+        notifier.notify("Time Up", timeout=15 * 1000)
         self.sound_player.play_timeup()
         self.round_started = False
-        print('Round finished!\n')
+        print("Round finished!\n")
 
     def dojo(self):
         while self.is_running:

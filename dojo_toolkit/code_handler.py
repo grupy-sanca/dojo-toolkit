@@ -7,13 +7,14 @@ from dojo_toolkit.notifier import notifier
 
 class DojoCodeHandler(PatternMatchingEventHandler):
     """Handles the python file changes"""
-    patterns = ['*.py']
+
+    patterns = ["*.py"]
     ignore_directories = True
     min_test_time_interval = 2
 
     def __init__(self, *args, **kwargs):
-        self.dojo = kwargs.pop('dojo')
-        self.test_runner = kwargs.pop('test_runner')
+        self.dojo = kwargs.pop("dojo")
+        self.test_runner = kwargs.pop("test_runner")
 
         super(DojoCodeHandler, self).__init__(*args, **kwargs)
 
@@ -23,8 +24,8 @@ class DojoCodeHandler(PatternMatchingEventHandler):
         return time.time() - self.last_test_run_time
 
     def handle_stopped_round(self):
-        notifier.notify('Round has not been started')
-        print('Press <Enter> to start the round')
+        notifier.notify("Round has not been started")
+        print("Press <Enter> to start the round")
 
     def on_modified(self, event):
         """Called when a file in the dojo directory is modified

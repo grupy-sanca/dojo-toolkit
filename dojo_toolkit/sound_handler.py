@@ -9,13 +9,13 @@ class SoundHandler:
     def __init__(self):
         self.player = pyglet.media.Player()
 
-        start_audio_path = os.path.join(SOUNDS_DIR, 'start.wav')
+        start_audio_path = os.path.join(SOUNDS_DIR, "start.wav")
         self.start_media = pyglet.media.load(start_audio_path, streaming=False)
 
-        success_audio_path = os.path.join(SOUNDS_DIR, 'pass.wav')
+        success_audio_path = os.path.join(SOUNDS_DIR, "pass.wav")
         self.success_media = pyglet.media.load(success_audio_path, streaming=False)
 
-        timeup_audio_path = os.path.join(SOUNDS_DIR, 'timeup.wav')
+        timeup_audio_path = os.path.join(SOUNDS_DIR, "timeup.wav")
         self.timeup_media = pyglet.media.load(timeup_audio_path, streaming=False)
 
     def play(self):
