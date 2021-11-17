@@ -30,12 +30,6 @@ Installation:
   $ pip install dojo-toolkit
 
 
-If you use GTK you can install dojo-toolkit with desktop notification support:
-::
-
-  $ pip install dojo-toolkit[gtk]
-
-
 Running:
 ::
 
@@ -43,6 +37,11 @@ Running:
 
 
 For detailed information about running from source: `CONTRIBUING.rst <https://github.com/grupy-sanca/dojo-toolkit/blob/master/CONTRIBUTING.rst>`_
+To see the options available use:
+::
+
+  $ dojo --help
+
 
 Contributing
 ------------

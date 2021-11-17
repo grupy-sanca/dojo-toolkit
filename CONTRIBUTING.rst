@@ -34,22 +34,11 @@ How to Run Dojo-Toolkit for development
   
   $ git clone https://github.com/grupy-sanca/dojo-toolkit.git
 
-2. (optional) Create the virtual environment
+2. Create the virtual environment using `Poetry <https://python-poetry.org/>`_
 ::
   
-  $ python -m venv env
-  $ source env/bin/activate
+  $ make install
 
-3. Install requirements
-::
-
-  $ (env) pip install -r requirements-test.txt
-
-
-4. Install locally
-::
-
-  $ (env) pip install -e .
 
 Done :-)
 
