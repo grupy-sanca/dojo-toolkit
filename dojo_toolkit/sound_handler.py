@@ -2,7 +2,7 @@ import os
 
 import pyglet
 
-from .settings import SOUNDS_DIR
+from dojo_toolkit.settings import SOUNDS_DIR
 
 
 class SoundHandler:

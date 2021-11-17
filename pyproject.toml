@@ -10,6 +10,7 @@ python = "^3.9"
 watchdog = "^2.1.6"
 pyglet = "^1.5.21"
 pgi = {version = "^0.0.11", platform = "linux"}
+clint = "^0.5.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
