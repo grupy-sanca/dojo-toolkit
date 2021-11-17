@@ -61,7 +61,7 @@ def test_doctest_test_runner_run_doctest_success(code_file):
     write_docstring(code_file, code)
     test_runner = DoctestTestRunner(code_path=str(code_file.dirpath()), sound_player=None)
 
-    result = test_runner._run_doctest()
+    result = test_runner._run_test()
 
     assert result == {"is_success": True, "output": ""}
 
@@ -74,7 +74,7 @@ def test_doctest_test_runner_run_doctest_fail(code_file):
     write_docstring(code_file, code)
     test_runner = DoctestTestRunner(code_path=str(code_file.dirpath()), sound_player=None)
 
-    result = test_runner._run_doctest()
+    result = test_runner._run_test()
 
     assert result["is_success"] is False
     output_lines = result["output"].split("\n")
