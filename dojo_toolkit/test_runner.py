@@ -7,7 +7,18 @@ import subprocess
 from .notifier import notifier
 
 
-class DoctestTestRunner:
+def get_test_runner(test_runner, runner, code_path, sound_player):
+    if test_runner:
+        return test_runner
+    if runner == "doctest":
+        return DoctestTestRunner(code_path, sound_player)
+    elif runner == "pytest":
+        return PytestTestRunner(code_path, sound_player)
+    else:
+        raise NotImplementedError("Invalid runner")
+
+
+class LocalTestRunner:
     def __init__(self, code_path, sound_player):
         self.code_path = code_path
         self.sound_player = sound_player
@@ -18,19 +29,6 @@ class DoctestTestRunner:
         self._handle_result(result["is_success"])
         print(result["output"])
         return result["is_success"]
-
-    def _run_doctest(self):
-        result = subprocess.run(
-            ["python -m doctest " + self.code_path + "/*.py"],
-            capture_output=True,
-            shell=True,
-            encoding="utf-8",
-        )
-
-        return {
-            "is_success": result.returncode == 0,
-            "output": result.stdout,
-        }
 
     def _clear_screen(self):
         command = "cls" if os.name == "nt" else "clear"
@@ -50,3 +48,33 @@ class DoctestTestRunner:
     def _handle_failure(self):
         print("\nTests failed!\n")
         notifier.fail("NOT OK TO TALK")
+
+
+class DoctestTestRunner(LocalTestRunner):
+    def _run_doctest(self):
+        result = subprocess.run(
+            ["python -m doctest " + self.code_path + "/*.py"],
+            capture_output=True,
+            shell=True,
+            encoding="utf-8",
+        )
+
+        return {
+            "is_success": result.returncode == 0,
+            "output": result.stdout,
+        }
+
+
+class PytestTestRunner(LocalTestRunner):
+    def _run_doctest(self):
+        result = subprocess.run(
+            ["python -m pytest " + self.code_path + "/*.py"],
+            capture_output=True,
+            shell=True,
+            encoding="utf-8",
+        )
+
+        return {
+            "is_success": result.returncode == 0,
+            "output": result.stdout,
+        }

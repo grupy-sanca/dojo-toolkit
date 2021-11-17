@@ -3,7 +3,7 @@ from unittest import mock
 
 import pytest
 
-from dojo_toolkit.test_runner import DoctestTestRunner
+from dojo_toolkit.test_runner import DoctestTestRunner, PytestTestRunner, get_test_runner
 
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -104,3 +104,19 @@ def test_docstringfy():
     """
 
     assert docstringfy(code) == '"""\n>>> 1 + 2\n3\n"""'
+
+
+@pytest.mark.parametrize(
+    "runner,test_runner", [("doctest", DoctestTestRunner), ("pytest", PytestTestRunner)]
+)
+def test_get_test_runner(runner, test_runner, code_file):
+    test_runner_got = get_test_runner(
+        None, runner, code_path=str(code_file.dirpath()), sound_player=None
+    )
+
+    assert isinstance(test_runner_got, test_runner)
+
+
+def test_get_test_runner_invalid_runner(code_file):
+    with pytest.raises(NotImplementedError):
+        get_test_runner(None, "", code_path=str(code_file.dirpath()), sound_player=None)

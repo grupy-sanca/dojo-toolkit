@@ -7,7 +7,7 @@ from watchdog.observers import Observer
 from dojo_toolkit.code_handler import DojoCodeHandler
 from dojo_toolkit.notifier import notifier
 from dojo_toolkit.sound_handler import SoundHandler
-from dojo_toolkit.test_runner import DoctestTestRunner
+from dojo_toolkit.test_runner import get_test_runner
 from dojo_toolkit.timer import Timer
 
 
@@ -15,14 +15,13 @@ class Dojo:
     ROUND_TIME = 5
     round_started = False
 
-    def __init__(self, code_path, round_time=None, mute=False, test_runner=None):
+    def __init__(self, code_path, round_time=None, mute=False, test_runner=None, runner="doctest"):
         self.code_path = code_path
         self.round_time = round_time or self.ROUND_TIME
         self.sound_player = mock.Mock() if mute else SoundHandler()
 
-        test_runner = test_runner or DoctestTestRunner(
-            code_path=code_path, sound_player=self.sound_player
-        )
+        test_runner = get_test_runner(test_runner, runner, self.code_path, self.sound_player)
+
         event_handler = DojoCodeHandler(dojo=self, test_runner=test_runner)
 
         self.observer = Observer()
