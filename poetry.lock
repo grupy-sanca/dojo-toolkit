@@ -304,7 +304,7 @@ watchmedo = ["PyYAML (>=3.10)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "3434e0f1a8316f7fcb7424af4308db66dd405a8d262f72ca1c38b842781dc4ea"
+content-hash = "be3c35bacf76f683c877471918bcd79bde47ff292c3a113963819370ed0ca7d3"
 
 [metadata.files]
 atomicwrites = [
