@@ -15,21 +15,21 @@ class DoctestTestRunner:
     def run(self):
         result = self._run_doctest()
         self._clear_screen()
-        self._handle_result(result['is_success'])
-        print(result['output'])
-        return result['is_success']
+        self._handle_result(result["is_success"])
+        print(result["output"])
+        return result["is_success"]
 
     def _run_doctest(self):
         result = subprocess.run(
             ["python -m doctest " + self.code_path + "/*.py"],
             capture_output=True,
             shell=True,
-            encoding="utf-8"
+            encoding="utf-8",
         )
 
         return {
-            'is_success': result.returncode == 0,
-            'output': result.stdout,
+            "is_success": result.returncode == 0,
+            "output": result.stdout,
         }
 
     def _clear_screen(self):
@@ -43,10 +43,10 @@ class DoctestTestRunner:
             self._handle_failure()
 
     def _handle_success(self):
-        print('\nTests passed!\n')
-        notifier.success('OK TO TALK')
+        print("\nTests passed!\n")
+        notifier.success("OK TO TALK")
         self.sound_player.play_success()
 
     def _handle_failure(self):
-        print('\nTests failed!\n')
-        notifier.fail('NOT OK TO TALK')
+        print("\nTests failed!\n")
+        notifier.fail("NOT OK TO TALK")

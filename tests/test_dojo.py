@@ -7,14 +7,14 @@ from dojo_toolkit.dojo import Dojo  # NOQA
 
 @pytest.fixture
 def mocked_dojo():
-    with mock.patch('dojo_toolkit.dojo.Observer'), \
-            mock.patch('dojo_toolkit.dojo.Timer'), \
-            mock.patch('dojo_toolkit.dojo.SoundHandler'):
-        return Dojo('/foo/bar', test_runner=mock.Mock())
+    with mock.patch("dojo_toolkit.dojo.Observer"), mock.patch(
+        "dojo_toolkit.dojo.Timer"
+    ), mock.patch("dojo_toolkit.dojo.SoundHandler"):
+        return Dojo("/foo/bar", test_runner=mock.Mock())
 
 
-@mock.patch('dojo_toolkit.dojo.Thread')
-@mock.patch('dojo_toolkit.dojo.input')
+@mock.patch("dojo_toolkit.dojo.Thread")
+@mock.patch("dojo_toolkit.dojo.input")
 def test_dojo_start(input, thread, mocked_dojo):
     mocked_dojo.start()
 
@@ -24,7 +24,7 @@ def test_dojo_start(input, thread, mocked_dojo):
     assert mocked_dojo.observer.join.called
 
 
-@mock.patch('dojo_toolkit.dojo.input')
+@mock.patch("dojo_toolkit.dojo.input")
 def test_dojo_dojo(input, mocked_dojo):
     mocked_dojo.is_running = True
     mocked_dojo.timer.is_running = False
@@ -33,7 +33,7 @@ def test_dojo_dojo(input, mocked_dojo):
         mocked_dojo.dojo()
 
 
-@mock.patch('dojo_toolkit.dojo.input')
+@mock.patch("dojo_toolkit.dojo.input")
 def test_dojo_dojo_timer_running(input, mocked_dojo):
     mocked_dojo.is_running = True
     mocked_dojo.timer.is_running = True
@@ -54,7 +54,7 @@ def test_dojo_dojo_stopped(mocked_dojo):
     mocked_dojo.dojo()
 
 
-@mock.patch('dojo_toolkit.dojo.input')
+@mock.patch("dojo_toolkit.dojo.input")
 def test_dojo_await_pilot_exchange(six_input, mocked_dojo):
     mocked_dojo.await_pilot_exchange()
     assert six_input.called
@@ -70,13 +70,13 @@ def test_dojo_round_start(mocked_dojo):
     assert mocked_dojo.round_started is True
 
 
-@mock.patch('dojo_toolkit.dojo.notifier')
+@mock.patch("dojo_toolkit.dojo.notifier")
 def test_dojo_round_info_without_notification(notifier, mocked_dojo):
     mocked_dojo.round_info()
     assert not notifier.notify.called
 
 
-@mock.patch('dojo_toolkit.dojo.notifier')
+@mock.patch("dojo_toolkit.dojo.notifier")
 def test_dojo_round_info_with_notification(notifier, mocked_dojo):
     mocked_dojo.timer.duration = 120
     mocked_dojo.timer.ellapsed_time = 60
@@ -84,7 +84,7 @@ def test_dojo_round_info_with_notification(notifier, mocked_dojo):
     assert notifier.notify.called
 
 
-@mock.patch('dojo_toolkit.dojo.notifier')
+@mock.patch("dojo_toolkit.dojo.notifier")
 def test_dojo_round_finished(notifier, mocked_dojo):
     mocked_dojo.round_started = True
 

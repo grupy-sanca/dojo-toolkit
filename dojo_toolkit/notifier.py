@@ -6,8 +6,9 @@ from .settings import ASSETS_DIR
 # workaround to tests run on travis
 try:
     import gi
-    gi.require_version('Notify', '0.7')
-    from gi.repository import Notify, GdkPixbuf
+
+    gi.require_version("Notify", "0.7")
+    from gi.repository import GdkPixbuf, Notify
 except ImportError:
     Notify = mock.Mock()
     GdkPixbuf = mock.Mock()
@@ -15,8 +16,8 @@ except ImportError:
 
 class BaseNotifier:
     def __init__(self):
-        self.fail_img_path = os.path.join(ASSETS_DIR, 'r.jpg')
-        self.success_img_path = os.path.join(ASSETS_DIR, 'g.jpg')
+        self.fail_img_path = os.path.join(ASSETS_DIR, "r.jpg")
+        self.success_img_path = os.path.join(ASSETS_DIR, "g.jpg")
 
     def get_notifier(self):
         raise NotImplementedError()
@@ -35,11 +36,11 @@ class GnomeNotifier(BaseNotifier):
         self._notifier = self.get_notifier()
 
     def get_notifier(self):
-        Notify.init('not')
-        return Notify.Notification.new('', '', '')
+        Notify.init("not")
+        return Notify.Notification.new("", "", "")
 
-    def notify(self, message, image_path='', timeout=5 * 60 * 1000):
-        self._notifier.update(message, '', image_path)
+    def notify(self, message, image_path="", timeout=5 * 60 * 1000):
+        self._notifier.update(message, "", image_path)
         self._notifier.set_timeout(timeout)
         self._notifier.show()
 

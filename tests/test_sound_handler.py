@@ -7,11 +7,11 @@ from dojo_toolkit.sound_handler import SoundHandler
 
 @pytest.fixture
 def mocked_sound_handler():
-    with mock.patch('dojo_toolkit.sound_handler.pyglet'):
+    with mock.patch("dojo_toolkit.sound_handler.pyglet"):
         return SoundHandler()
 
 
-@mock.patch('dojo_toolkit.sound_handler.pyglet')
+@mock.patch("dojo_toolkit.sound_handler.pyglet")
 def test_sound_handler(pyglet):
     sound_handler = SoundHandler()
     assert sound_handler

@@ -15,11 +15,19 @@ clean-build:
 	@rm -fr *.egg-info
 
 build: clean
-	python setup.py sdist
+	poetry build
 
-lint:
-	flake8 setup.py dojo_toolkit tests --max-line-length 100
+install:
+	poetry install
+
+format: install
+	poetry run black .
+	poetry run isort -rc .
+
+lint: install
+	poetry run flake8 dojo_toolkit tests --max-line-length 100
+	poetry run black . --check
+	poetry run isort . --check-only --diff
 
 test: lint
-	pytest
-	
+	poetry run pytest
