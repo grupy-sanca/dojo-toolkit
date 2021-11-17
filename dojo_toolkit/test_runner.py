@@ -46,8 +46,8 @@ class LocalTestRunner:
         self.sound_player.play_success()
 
     def _handle_failure(self):
-        print('\nTests failed!\n')
-        notifier.fail('NOT OK TO TALK')
+        print("\nTests failed!\n")
+        notifier.fail("NOT OK TO TALK")
 
 
 class DoctestTestRunner(LocalTestRunner):
@@ -56,12 +56,12 @@ class DoctestTestRunner(LocalTestRunner):
             ["python -m doctest " + self.code_path + "/*.py"],
             capture_output=True,
             shell=True,
-            encoding="utf-8"
+            encoding="utf-8",
         )
 
         return {
-            'is_success': result.returncode == 0,
-            'output': result.stdout,
+            "is_success": result.returncode == 0,
+            "output": result.stdout,
         }
 
 
@@ -71,10 +71,10 @@ class PytestTestRunner(LocalTestRunner):
             ["python -m pytest " + self.code_path + "/*.py"],
             capture_output=True,
             shell=True,
-            encoding="utf-8"
+            encoding="utf-8",
         )
 
         return {
-            'is_success': result.returncode == 0,
-            'output': result.stdout,
+            "is_success": result.returncode == 0,
+            "output": result.stdout,
         }

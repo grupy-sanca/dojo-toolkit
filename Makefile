@@ -22,7 +22,7 @@ install:
 
 format: install
 	poetry run black .
-	poetry run isort -rc .
+	poetry run isort .
 
 lint: install
 	poetry run flake8 dojo_toolkit tests --max-line-length 100
