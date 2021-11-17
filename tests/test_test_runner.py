@@ -3,7 +3,7 @@ from unittest import mock
 
 import pytest
 
-from dojo_toolkit.test_runner import DoctestTestRunner, PytestTestRunner, get_test_runner  # noqa
+from dojo_toolkit.test_runner import DoctestTestRunner, PytestTestRunner, get_test_runner
 
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 
