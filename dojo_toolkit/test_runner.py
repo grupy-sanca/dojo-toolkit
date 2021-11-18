@@ -25,8 +25,11 @@ class LocalTestRunner:
         self.code_path = code_path
         self.sound_player = sound_player
 
+    def _run_test(self):
+        raise NotImplementedError("_run_test() must be implemented")
+
     def run(self):
-        result = self._run_doctest()
+        result = self._run_test()
         self._clear_screen()
         self._handle_result(result["is_success"])
         print(result["output"])
@@ -53,7 +56,7 @@ class LocalTestRunner:
 
 
 class DoctestTestRunner(LocalTestRunner):
-    def _run_doctest(self):
+    def _run_test(self):
         result = subprocess.run(
             ["python -m doctest " + self.code_path + "/*.py"],
             capture_output=True,
@@ -68,7 +71,7 @@ class DoctestTestRunner(LocalTestRunner):
 
 
 class PytestTestRunner(LocalTestRunner):
-    def _run_doctest(self):
+    def _run_test(self):
         result = subprocess.run(
             ["python -m pytest " + self.code_path + "/*.py"],
             capture_output=True,
