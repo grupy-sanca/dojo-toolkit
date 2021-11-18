@@ -24,7 +24,9 @@ def parse_args():
         type=os.path.realpath,
     )
     parser.add_argument(
-        "--mute", help="mute all sounds (default: all sounds are played)", action="store_true"
+        "--mute",
+        help="mute all sounds (default: all sounds are played), note: this only works in Linux",
+        action="store_true",
     )
     parser.add_argument(
         "--runner", help="name of the runner (default: doctest)", default="doctest", type=str
