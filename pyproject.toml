@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "dojo-toolkit"
-version = "0.6.0"
+version = "0.6.1"
 description = "Toolkit for Python Coding Dojos."
 authors = ["grupy-sanca"]
 packages = [{ include = "dojo_toolkit" }]
+readme = "README.rst"
 
 [tool.poetry.dependencies]
 python = "^3.9"
