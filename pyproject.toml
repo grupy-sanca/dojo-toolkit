@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dojo-toolkit"
-version = "0.5.0"
+version = "0.6.0"
 description = "Toolkit for Python Coding Dojos."
 authors = ["grupy-sanca"]
 packages = [{ include = "dojo_toolkit" }]
@@ -16,7 +16,7 @@ clint = "^0.5.1"
 pytest = "^6.2.5"
 pytest-cov = "^3.0.0"
 flake8 = "^4.0.1"
-black = "^21.11b0"
+black = "^22.6.0"
 isort = "^5.10.1"
 coverage = {extras = ["toml"], version = "^6.1.2"}
 
