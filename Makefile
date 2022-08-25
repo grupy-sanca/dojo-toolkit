@@ -25,7 +25,7 @@ format: install
 	poetry run isort .
 
 lint: install
-	poetry run flake8 dojo_toolkit tests --max-line-length 100
+	poetry run flake8
 	poetry run black . --check
 	poetry run isort . --check-only --diff
 
