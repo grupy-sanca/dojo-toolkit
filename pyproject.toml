@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dojo-toolkit"
-version = "0.6.1"
+version = "0.7.0a0"
 description = "Toolkit for Python Coding Dojos."
 authors = ["grupy-sanca"]
 packages = [{ include = "dojo_toolkit" }]
@@ -12,6 +12,7 @@ watchdog = "^2.1.6"
 pyglet = "^1.5.21"
 pgi = {version = "^0.0.11", platform = "linux"}
 clint = "^0.5.1"
+typer = {extras = ["all"], version = "^0.6.1"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
@@ -36,7 +37,7 @@ multi_line_output = 3
 include_trailing_comma = true
 
 [tool.poetry.scripts]
-dojo = "dojo_toolkit.main:main"
+dojo = "dojo_toolkit.main:run"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
