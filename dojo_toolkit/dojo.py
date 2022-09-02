@@ -39,6 +39,7 @@ class Dojo:
         self.is_running = True
         print("Dojo toolkit started!")
         self.thread = Thread(target=self.dojo)
+        self.thread.daemon = True
         self.thread.start()
 
         self.thread.join()
