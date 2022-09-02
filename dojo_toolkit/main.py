@@ -19,22 +19,22 @@ def main(
         file_okay=False,
         dir_okay=True,
         readable=True,
-        help="the path to the folder containing the code used during the dojo",
+        help="The path to the folder containing the code used during the dojo",
     ),
     time: Optional[float] = typer.Option(
         Dojo.ROUND_TIME,
         "--time",
         "-t",
-        help="the amount of time a dojo round lasts",
+        help="The amount of time a dojo round lasts",
     ),
     mute: Optional[bool] = typer.Option(
         False,
-        help="mute all sounds, note: this only works in Linux",
+        help="Mute all sounds, note: this only works in Linux",
     ),
     runner: Optional[Runners] = typer.Option(
         Runners.doctest.value,
         "--runner",
-        help="name of the runner",
+        help="Name of the runner",
     ),
 ):
     dojo = Dojo(
