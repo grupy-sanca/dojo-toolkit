@@ -49,21 +49,10 @@ def test_code_handler_on_modified_tests_fail(get_interval, mocked_code_handler):
 
 
 @mock.patch("dojo_toolkit.code_handler.DojoCodeHandler.get_last_test_run_interval")
-@mock.patch("dojo_toolkit.code_handler.notifier")
-def test_code_handler_on_modified_and_round_stopped(
-    notifier_mock, get_interval_mock, mocked_code_handler
-):
+def test_code_handler_on_modified_and_round_stopped(get_interval_mock, mocked_code_handler):
     mocked_code_handler.dojo.round_started = False
     get_interval_mock.return_value = 1234
 
     mocked_code_handler.on_modified(mock.Mock())
 
-    notifier_mock.notify.assert_called_once_with("Round has not been started")
     assert get_interval_mock.call_count == 0
-
-
-@mock.patch("dojo_toolkit.code_handler.notifier")
-def test_code_handler_handle_stopped_round(notifier, mocked_code_handler):
-    mocked_code_handler.handle_stopped_round()
-
-    assert notifier.notify.called
