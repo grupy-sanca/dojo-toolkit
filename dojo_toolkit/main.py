@@ -1,41 +1,50 @@
-import os
-from argparse import ArgumentParser
+from enum import Enum
+from pathlib import Path
+from typing import Optional
+
+import typer
 
 from dojo_toolkit.dojo import Dojo
 
 
-def parse_args():
-    """
-    build argument parser
-    """
-    parser = ArgumentParser()
-    parser.add_argument(
-        "-t",
-        "--time",
-        help="the amount of time a dojo round lasts",
-        default=Dojo.ROUND_TIME,
-        type=float,
-    )
-    parser.add_argument(
-        "path",
+class Runners(str, Enum):
+    doctest = "doctest"
+    pytest = "pytest"
+
+
+def main(
+    path: Optional[Path] = typer.Argument(
+        Path("."),
+        exists=True,
+        file_okay=False,
+        dir_okay=True,
+        readable=True,
         help="the path to the folder containing the code used during the dojo",
-        nargs="?",
-        default=".",
-        type=os.path.realpath,
+    ),
+    time: Optional[float] = typer.Option(
+        Dojo.ROUND_TIME,
+        "--time",
+        "-t",
+        help="the amount of time a dojo round lasts",
+    ),
+    mute: Optional[bool] = typer.Option(
+        False,
+        help="mute all sounds, note: this only works in Linux",
+    ),
+    runner: Optional[Runners] = typer.Option(
+        Runners.doctest.value,
+        "--runner",
+        help="name of the runner",
+    ),
+):
+    dojo = Dojo(
+        code_path=path.as_posix(),  # type: ignore
+        round_time=time,  # type: ignore
+        mute=mute,  # type: ignore
+        runner=runner.value,  # type: ignore
     )
-    parser.add_argument(
-        "--mute",
-        help="mute all sounds (default: all sounds are played), note: this only works in Linux",
-        action="store_true",
-    )
-    parser.add_argument(
-        "--runner", help="name of the runner (default: doctest)", default="doctest", type=str
-    )
-
-    return parser.parse_args()
-
-
-def main():
-    args = parse_args()
-    dojo = Dojo(code_path=args.path, round_time=args.time, mute=args.mute, runner=args.runner)
     dojo.start()
+
+
+def run():
+    typer.run(main)
