@@ -2,8 +2,6 @@ import time
 
 from watchdog.events import PatternMatchingEventHandler
 
-from dojo_toolkit.notifier import notifier
-
 
 class DojoCodeHandler(PatternMatchingEventHandler):
     """Handles the python file changes"""
@@ -23,10 +21,6 @@ class DojoCodeHandler(PatternMatchingEventHandler):
     def get_last_test_run_interval(self):
         return time.time() - self.last_test_run_time
 
-    def handle_stopped_round(self):
-        notifier.notify("Round has not been started")
-        print("Press <Enter> to start the round")
-
     def on_modified(self, event):
         """Called when a file in the dojo directory is modified
         runs the doctest and display a notification
@@ -35,8 +29,7 @@ class DojoCodeHandler(PatternMatchingEventHandler):
         """
 
         if not self.dojo.round_started:
-            return self.handle_stopped_round()
-
+            return
         if self.get_last_test_run_interval() < self.min_test_time_interval:
             return
         self.last_test_run_time = time.time()
