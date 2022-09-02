@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dojo-toolkit"
-version = "0.7.0a0"
+version = "0.7.0"
 description = "Toolkit for Python Coding Dojos."
 authors = ["grupy-sanca"]
 packages = [{ include = "dojo_toolkit" }]
