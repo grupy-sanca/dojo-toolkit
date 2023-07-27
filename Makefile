@@ -57,7 +57,7 @@ lint: pyformatcheck
 format: ruff black
 
 .PHONY: test
-test: lint
+test:
 	poetry run pytest
 
 SHELL := bash
