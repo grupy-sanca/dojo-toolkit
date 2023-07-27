@@ -14,7 +14,7 @@ class DojoCodeHandler(PatternMatchingEventHandler):
         self.dojo = kwargs.pop("dojo")
         self.test_runner = kwargs.pop("test_runner")
 
-        super(DojoCodeHandler, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.last_test_run_time = time.time()
 

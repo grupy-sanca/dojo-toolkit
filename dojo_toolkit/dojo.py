@@ -31,7 +31,7 @@ class Dojo:
 
     def start(self):
         self.observer.start()
-        print("\nWatching: {} folder".format(self.code_path))
+        print(f"\nWatching: {self.code_path} folder")
 
         self.is_running = True
         print("Dojo toolkit started!")

@@ -12,15 +12,14 @@ watchdog = "^2.1.6"
 pyglet = "^1.5.21"
 pgi = {version = "^0.0.11", platform = "linux"}
 clint = "^0.5.1"
-typer = {extras = ["all"], version = "^0.6.1"}
+typer = {extras = ["all"], version = "^0.9.0"}
 
-[tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
-pytest-cov = "^3.0.0"
-flake8 = "^4.0.1"
-black = "^22.6.0"
-isort = "^5.10.1"
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+black = "^23.7.0"
 coverage = {extras = ["toml"], version = "^6.1.2"}
+ruff = "^0.0.278"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -28,7 +27,25 @@ addopts = "-vv --cov=dojo_toolkit --cov-report=term-missing"
 testpaths = ["tests"]
 
 [tool.black]
+target-version = ['py311']
 line-length = 100
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+select = [
+    "I",  # isort
+    "C4",  # flake8-comprehensions
+    "F",  # pyflakes
+    "E",  # pycodestyle
+    "TID",  # flake8-tidy-imports
+    "C901",  # mccabe
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "C401",  # generator syntax for sets vs always force set comprehension
+    "PLC0414",  # allow explicit re-exports using 'as' without forcing __all__
+]
 
 [tool.isort]
 line_length = 100
