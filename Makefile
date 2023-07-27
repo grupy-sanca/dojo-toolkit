@@ -1,3 +1,4 @@
+.PHONY: clean
 clean: clean-eggs clean-build
 	@find . -iname '*.pyc' -delete
 	@find . -iname '*.pyo' -delete
@@ -5,29 +6,58 @@ clean: clean-eggs clean-build
 	@find . -iname '*.swp' -delete
 	@find . -iname '__pycache__' -delete
 
+.PHONY: clean-eggs
 clean-eggs:
 	@find . -name '*.egg' -print0|xargs -0 rm -rf --
 	@rm -rf .eggs/
 
+.PHONY: clean-build
 clean-build:
 	@rm -fr build/
 	@rm -fr dist/
 	@rm -fr *.egg-info
 
+.PHONY: ruff
+ruff:
+	poetry run ruff . --fix
+
+.PHONY: ruffcheck
+ruffcheck:
+	@echo "Checking ruff..."
+	poetry run ruff .
+
+.PHONY: black
+black:
+	poetry run black .
+
+.PHONY: blackcheck
+blackcheck:
+	@echo "Checking black..."
+	poetry run black --check --diff .
+
+.PHONY: build
 build: clean
 	poetry build
 
+.PHONY: install
 install:
 	poetry install
 
-format: install
-	poetry run black .
-	poetry run isort .
+.PHONY: poetrycheck
+poetrycheck:
+	poetry lock --check
 
-lint: install
-	poetry run flake8
-	poetry run black . --check
-	poetry run isort . --check-only --diff
+.PHONY: pyformatcheck
+pyformatcheck: poetrycheck blackcheck ruffcheck
 
-test: lint
-	poetry run pytest
+.PHONY: lint
+lint: pyformatcheck
+
+.PHONY: format
+format: ruff black
+
+.PHONY: test
+test:
+	poetry run pytest -vv --cov=dojo_toolkit --cov-report=term-missing
+
+SHELL := bash

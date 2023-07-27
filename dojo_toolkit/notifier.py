@@ -28,7 +28,7 @@ class BaseNotifier:
 
 class GnomeNotifier(BaseNotifier):
     def __init__(self):
-        super(GnomeNotifier, self).__init__()
+        super().__init__()
 
         self.fail_img = GdkPixbuf.Pixbuf.new_from_file(self.fail_img_path)
         self.success_img = GdkPixbuf.Pixbuf.new_from_file(self.success_img_path)
