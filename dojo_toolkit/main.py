@@ -28,7 +28,7 @@ def main(
         typer.Option(
             "--time",
             "-t",
-            help="The amount of time a dojo round lasts",
+            help="The amount of time a dojo round lasts, in minutes",
         ),
     ] = Dojo.ROUND_TIME,
     mute: Annotated[
