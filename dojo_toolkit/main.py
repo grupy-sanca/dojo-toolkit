@@ -15,7 +15,7 @@ class Runners(str, Enum):
 def main(
     path: Annotated[
         Optional[Path],
-        typer.Option(
+        typer.Argument(
             exists=True,
             file_okay=False,
             dir_okay=True,
