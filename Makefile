@@ -58,6 +58,6 @@ format: ruff black
 
 .PHONY: test
 test:
-	poetry run pytest
+	poetry run pytest -vv --cov=dojo_toolkit --cov-report=term-missing
 
 SHELL := bash

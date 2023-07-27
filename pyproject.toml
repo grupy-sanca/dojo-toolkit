@@ -22,8 +22,7 @@ coverage = {extras = ["toml"], version = "^6.1.2"}
 ruff = "^0.0.278"
 
 [tool.pytest.ini_options]
-minversion = "6.0"
-addopts = "-vv --cov=dojo_toolkit --cov-report=term-missing"
+minversion = "7.0"
 testpaths = ["tests"]
 
 [tool.black]
