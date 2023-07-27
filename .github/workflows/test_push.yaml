@@ -18,9 +18,9 @@ jobs:
           python-version: '3.9'
           architecture: 'x64'
       - name: "Python Poetry Action"
-        uses: Gr1N/setup-poetry@v7
+        uses: Gr1N/setup-poetry@v8
       - name: "Run tests and linters"
-        run: make test
+        run: make install && make test
       - name: Coveralls
         uses: AndreMiras/coveralls-python-action@develop
         with:
