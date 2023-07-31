@@ -1,3 +1,4 @@
+import os
 from enum import Enum
 from pathlib import Path
 from typing import Annotated, Optional
@@ -51,7 +52,11 @@ def main(
         mute=mute,  # type: ignore
         runner=runner.value,  # type: ignore
     )
-    dojo.start()
+    os.system("stty -ixon")
+    try:
+        dojo.start()
+    finally:
+        os.system("stty ixon")
 
 
 def run():
