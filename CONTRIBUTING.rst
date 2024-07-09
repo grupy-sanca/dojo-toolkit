@@ -53,7 +53,6 @@ How to Run Dojo-Toolkit Tests
 -----------------------------
 
 After installing the depencencies, simply run:
-
 ::
 
   $ make test
@@ -61,5 +60,10 @@ After installing the depencencies, simply run:
 
 Coding Style
 ------------
+
+To run the linters
+::
+
+  $ make lint
 
 `PEP8 <https://www.python.org/dev/peps/pep-0008/>`_ with line lenght up to 99 characters.
