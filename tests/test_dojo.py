@@ -7,9 +7,11 @@ from dojo_toolkit.dojo import Dojo
 
 @pytest.fixture
 def mocked_dojo():
-    with mock.patch("dojo_toolkit.dojo.Observer"), mock.patch(
-        "dojo_toolkit.dojo.Timer"
-    ), mock.patch("dojo_toolkit.dojo.SoundHandler"):
+    with (
+        mock.patch("dojo_toolkit.dojo.Observer"),
+        mock.patch("dojo_toolkit.dojo.Timer"),
+        mock.patch("dojo_toolkit.dojo.SoundHandler"),
+    ):
         return Dojo("/foo/bar", test_runner=mock.Mock())
 
 
