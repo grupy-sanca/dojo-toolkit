@@ -19,7 +19,7 @@ pytest = "^7.4.0"
 pytest-cov = "^4.1.0"
 black = "^23.7.0"
 coverage = {extras = ["toml"], version = "^6.1.2"}
-ruff = "^0.0.278"
+ruff = "^0.5.1"
 
 [tool.pytest.ini_options]
 minversion = "7.0"
