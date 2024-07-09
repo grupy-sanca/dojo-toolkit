@@ -29,6 +29,8 @@ __ https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/wor
 How to Run Dojo-Toolkit for development
 ---------------------------------------
 
+Minimal Python version: 3.9.x
+
 1. Clone the project
 ::
   
@@ -39,15 +41,22 @@ How to Run Dojo-Toolkit for development
   
   $ make install
 
+3. Install the entrypoint script locally
+::
+
+  $ pip install -e .
+
 
 Done :-)
 
 How to Run Dojo-Toolkit Tests
 -----------------------------
+
+After installing the depencencies, simply run:
+
 ::
 
-  $ pip install -r requirements-test.txt
-  $ py.test
+  $ make test
 
 
 Coding Style
