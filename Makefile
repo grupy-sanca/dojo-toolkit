@@ -10,10 +10,9 @@ test:
 
 .PHONY: lint
 lint:
-	@echo "Checking lock file"
 	poetry check --lock
-	@echo "Checking code"
 	poetry run ruff check .
+	poetry run ruff format . --check
 
 .PHONY: format
 format:
