@@ -1,3 +1,27 @@
+SHELL := bash
+
+.PHONY: install
+install:
+	poetry install
+
+.PHONY: test
+test:
+	poetry run pytest -vv --cov=dojo_toolkit --cov-report=term-missing
+
+.PHONY: lint
+lint:
+	poetry check --lock
+	poetry run ruff check .
+	poetry run ruff format . --check
+
+.PHONY: format
+format:
+	poetry run ruff check . --fix
+	poetry run ruff format .
+
+.PHONY: build
+build: clean
+	poetry build
 .PHONY: clean
 clean: clean-eggs clean-build
 	@find . -iname '*.pyc' -delete
@@ -16,48 +40,3 @@ clean-build:
 	@rm -fr build/
 	@rm -fr dist/
 	@rm -fr *.egg-info
-
-.PHONY: ruff
-ruff:
-	poetry run ruff . --fix
-
-.PHONY: ruffcheck
-ruffcheck:
-	@echo "Checking ruff..."
-	poetry run ruff .
-
-.PHONY: black
-black:
-	poetry run black .
-
-.PHONY: blackcheck
-blackcheck:
-	@echo "Checking black..."
-	poetry run black --check --diff .
-
-.PHONY: build
-build: clean
-	poetry build
-
-.PHONY: install
-install:
-	poetry install
-
-.PHONY: poetrycheck
-poetrycheck:
-	poetry lock --check
-
-.PHONY: pyformatcheck
-pyformatcheck: poetrycheck blackcheck ruffcheck
-
-.PHONY: lint
-lint: pyformatcheck
-
-.PHONY: format
-format: ruff black
-
-.PHONY: test
-test:
-	poetry run pytest -vv --cov=dojo_toolkit --cov-report=term-missing
-
-SHELL := bash
