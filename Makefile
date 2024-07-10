@@ -22,7 +22,7 @@ format:
 .PHONY: build
 build: clean
 	poetry build
-
+.PHONY: clean
 clean: clean-eggs clean-build
 	@find . -iname '*.pyc' -delete
 	@find . -iname '*.pyo' -delete
