@@ -1,5 +1,4 @@
 SHELL := bash
-.PHONY: clean
 
 .PHONY: install
 install:
