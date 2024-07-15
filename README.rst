@@ -52,4 +52,4 @@ Check the `CONTRIBUING.rst <https://github.com/grupy-sanca/dojo-toolkit/blob/mai
 Dependencies
 ------------
 - Python 3
-- (Optional) `Libnotify <https://developer.gnome.org/libnotify>`_
+- (Optional) `Libnotify <https://gitlab.gnome.org/GNOME/libnotify>`_
