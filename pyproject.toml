@@ -18,15 +18,11 @@ typer = {extras = ["all"], version = "^0.9.0"}
 pytest = "^7.4.0"
 pytest-cov = "^4.1.0"
 coverage = {extras = ["toml"], version = "^6.1.2"}
-ruff = "^0.5.1"
+ruff = "^0.5.6"
 
 [tool.pytest.ini_options]
 minversion = "7.0"
 testpaths = ["tests"]
-
-[tool.black]
-target-version = ['py311']
-line-length = 100
 
 [tool.ruff]
 target-version = "py311"
@@ -40,16 +36,9 @@ lint.select = [
     "C901",  # mccabe
 ]
 lint.ignore = [
-    "E501",  # line too long, handled by black
     "C401",  # generator syntax for sets vs always force set comprehension
     "PLC0414",  # allow explicit re-exports using 'as' without forcing __all__
 ]
-
-[tool.isort]
-line_length = 100
-src_paths = ["dojo_toolkit", "tests"]
-multi_line_output = 3
-include_trailing_comma = true
 
 [tool.poetry.scripts]
 dojo = "dojo_toolkit.main:run"
