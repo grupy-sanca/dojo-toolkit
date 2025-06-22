@@ -2,26 +2,27 @@ SHELL := bash
 
 .PHONY: install
 install:
-	poetry install
+	uv sync --all-extras --dev
 
 .PHONY: test
 test:
-	poetry run pytest -vv --cov=dojo_toolkit --cov-report=term-missing
+	uv run pytest -vv --cov=dojo_toolkit --cov-report=term-missing
 
 .PHONY: lint
 lint:
-	poetry check --lock
-	poetry run ruff check .
-	poetry run ruff format . --check
+	uv lock --check
+	uv run ruff check .
+	uv run ruff format . --check
 
 .PHONY: format
 format:
-	poetry run ruff check . --fix
-	poetry run ruff format .
+	uv run ruff check . --fix
+	uv run ruff format .
 
 .PHONY: build
 build: clean
-	poetry build
+	uv build
+
 .PHONY: clean
 clean: clean-eggs clean-build
 	@find . -iname '*.pyc' -delete
