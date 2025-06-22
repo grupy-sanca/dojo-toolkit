@@ -36,7 +36,7 @@ Minimal Python version: 3.9.x
   
   $ git clone https://github.com/grupy-sanca/dojo-toolkit.git
 
-2. Create the virtual environment using `Poetry <https://python-poetry.org/>`_
+2. Create the virtual environment using `uv <https://docs.astral.sh/uv/>`_
 ::
   
   $ make install
