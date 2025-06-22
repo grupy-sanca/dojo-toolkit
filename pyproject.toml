@@ -1,24 +1,30 @@
-[tool.poetry]
+[project]
 name = "dojo-toolkit"
 version = "0.8.1"
 description = "Toolkit for Python Coding Dojos."
-authors = ["grupy-sanca"]
+authors = [{name = "grupy-sanca"}]
 packages = [{ include = "dojo_toolkit" }]
 readme = "README.rst"
+requires-python = ">=3.9"
 
-[tool.poetry.dependencies]
-python = "^3.9"
-watchdog = "^2.1.6"
-pyglet = "^1.5.21"
-pgi = {version = "^0.0.11", platform = "linux"}
-clint = "^0.5.1"
-typer = {extras = ["all"], version = "^0.9.0"}
+dependencies = [
+    "watchdog>=2.1.6,<3.0.0",
+    "pyglet>=1.5.21,<2.0.0",
+    "clint>=0.5.1,<0.6.0",
+    "typer[all]>=0.9.0,<1.0.0",
+    "pgi>=0.0.11; sys_platform == 'linux'"
+]
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^7.4.0"
-pytest-cov = "^4.1.0"
-coverage = {extras = ["toml"], version = "^6.1.2"}
-ruff = "^0.5.6"
+[dependency-groups]
+dev = [
+    "coverage[toml]>=6.1.2,<7.0.0",
+    "pytest>=8.3.4",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=4.1.0",
+    "pytest-env>=1.1.5",
+    "respx>=0.21.1",
+    "ruff>=0.8.2",
+]
 
 [tool.pytest.ini_options]
 minversion = "7.0"
@@ -40,9 +46,9 @@ lint.ignore = [
     "PLC0414",  # allow explicit re-exports using 'as' without forcing __all__
 ]
 
-[tool.poetry.scripts]
+[project.scripts]
 dojo = "dojo_toolkit.main:run"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
