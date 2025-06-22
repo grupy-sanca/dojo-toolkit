@@ -17,7 +17,7 @@ class Dojo:
     def __init__(self, code_path, round_time=None, mute=False, test_runner=None, runner="doctest"):
         self.code_path = code_path
         self.round_time = round_time or self.ROUND_TIME
-        self.sound_player = mock.Mock() if mute or sys.platform != "linux" else SoundHandler()
+        self.sound_player = mock.Mock() if mute else SoundHandler()
         self.info_notified = False
         self.timer = Timer(self.round_time)
 
