@@ -1,14 +1,10 @@
 from unittest import mock
 
-import pytest
-
 from dojo_toolkit.notifier import NotifierClient
 from dojo_toolkit.settings import ASSETS_DIR
 
-pytestmark = pytest.mark.asyncio
 
-
-@mock.patch("dojo_toolkit.notifier.DesktopNotifier")
+@mock.patch("dojo_toolkit.notifier.desktop_notifier.DesktopNotifier")
 def test_init(mock_desktop_notifier):
     """Test NotifierClient initialization."""
     notifier_client = NotifierClient()
@@ -20,45 +16,58 @@ def test_init(mock_desktop_notifier):
     mock_desktop_notifier.assert_called_once_with(app_name="dojo toolkit")
 
 
-@mock.patch("dojo_toolkit.notifier.Icon")
-@mock.patch("dojo_toolkit.notifier.Path")
 @mock.patch("dojo_toolkit.notifier.asyncio.create_task")
-def test_notify_creates_task(mock_create_task, mock_path, mock_icon):
-    mock_notifier = mock.MagicMock()
+@mock.patch("dojo_toolkit.notifier.desktop_notifier.Icon")
+@mock.patch("dojo_toolkit.notifier.desktop_notifier.DesktopNotifier")
+def test_notify(mock_desktop_notifier_cls, mock_icon_cls, mock_create_task):
+    """Test that notify sends correct notification via DesktopNotifier."""
+    mock_notifier_instance = mock_desktop_notifier_cls.return_value
+    mock_icon_instance = mock_icon_cls.return_value
+
     client = NotifierClient()
-    client.notifier = mock_notifier
+    client.notify(
+        message="Test Message",
+        title="Test Title",
+        image_path="/some/path/to/image.jpg",
+        timeout=10000,
+    )
 
-    mock_resolved_path = mock.Mock()
-    mock_path.return_value.resolve.return_value = mock_resolved_path
-    mock_icon_instance = mock.Mock()
-    mock_icon.return_value = mock_icon_instance
+    # Icon class should be called with correct path
+    mock_icon_cls.assert_called_once()
+    assert str(mock_icon_cls.call_args[1]["path"]).endswith("image.jpg")
 
-    client.notify("Hello", title="Test", image_path="some/image.png", timeout=1234)
-
-    mock_path.assert_called_once_with("some/image.png")
-    mock_icon.assert_called_once_with(path=mock_resolved_path)
-    mock_notifier.send.assert_called_once_with(
+    # DesktopNotifier.send should be wrapped in create_task
+    mock_notifier_instance.send.assert_called_once_with(
         icon=mock_icon_instance,
-        title="Test",
-        message="Hello",
+        title="Test Title",
+        message="Test Message",
         urgency=mock.ANY,
         sound=mock.ANY,
-        timeout=1234,
+        timeout=10000,
     )
+
     mock_create_task.assert_called_once()
 
 
 @mock.patch.object(NotifierClient, "notify")
-def test_success_calls_notify_with_success_image(mock_notify):
+def test_success(mock_notify):
+    """Test success notification uses the correct image."""
     client = NotifierClient()
-    client.success("Great!")
+    client.success("Operation succeeded")
 
-    mock_notify.assert_called_once_with(message="Great!", image_path=client.success_img_path)
+    mock_notify.assert_called_once_with(
+        message="Operation succeeded",
+        image_path=client.success_img_path,
+    )
 
 
 @mock.patch.object(NotifierClient, "notify")
-def test_failure_calls_notify_with_failure_image(mock_notify):
+def test_failure(mock_notify):
+    """Test failure notification uses the correct image."""
     client = NotifierClient()
-    client.failure("Oops!")
+    client.failure("Operation failed")
 
-    mock_notify.assert_called_once_with(message="Oops!", image_path=client.fail_img_path)
+    mock_notify.assert_called_once_with(
+        message="Operation failed",
+        image_path=client.fail_img_path,
+    )
