@@ -6,7 +6,6 @@ import os
 import subprocess
 
 from clint.textui import colored
-
 from dojo_toolkit.notifier import notifier
 
 
@@ -53,7 +52,7 @@ class LocalTestRunner:
 
     def _handle_failure(self):
         print(getattr(colored, "red")("\nTests failed!\n"))
-        notifier.fail("NOT OK TO TALK")
+        notifier.failure("NOT OK TO TALK")
 
 
 class DoctestTestRunner(LocalTestRunner):
