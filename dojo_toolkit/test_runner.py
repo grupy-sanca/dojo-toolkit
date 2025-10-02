@@ -6,6 +6,7 @@ import os
 import subprocess
 
 from clint.textui import colored
+
 from dojo_toolkit.notifier import notifier
 
 

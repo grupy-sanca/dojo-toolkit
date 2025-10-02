@@ -1,8 +1,9 @@
 from unittest import mock
 
 import pytest
-from dojo_toolkit.settings import ASSETS_DIR
+
 from dojo_toolkit.notifier import NotifierClient
+from dojo_toolkit.settings import ASSETS_DIR
 
 pytestmark = pytest.mark.asyncio
 
@@ -12,7 +13,8 @@ def test_init(mock_desktop_notifier):
     notifier_client = NotifierClient()
     assert notifier_client.notifier == mock_desktop_notifier.return_value
     assert notifier_client.fail_img_path == f"{ASSETS_DIR}/./assets/failure_notification_image.jpg"
-    assert notifier_client.success_img_path == f"{ASSETS_DIR}/./assets/success_notification_image.jpg"
+    assert (notifier_client.success_img_path ==
+            f"{ASSETS_DIR}/./assets/success_notification_image.jpg")
     mock_desktop_notifier.assert_called_once_with(app_name="dojo toolkit")
 
 @mock.patch("dojo_toolkit.notifier.Icon")
