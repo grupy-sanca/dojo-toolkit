@@ -17,19 +17,22 @@ class NotifierClient:
         icon_path = Path(image_path).resolve()
         icon = desktop_notifier.Icon(path=icon_path)
 
-        asyncio.create_task(self.notifier.send(
-            icon=icon,
-            title=title,
-            message=message,
-            urgency=desktop_notifier.Urgency.Low,
-            sound=desktop_notifier.DEFAULT_SOUND,
-            timeout=timeout
-        ))
+        asyncio.create_task(
+            self.notifier.send(
+                icon=icon,
+                title=title,
+                message=message,
+                urgency=desktop_notifier.Urgency.Low,
+                sound=desktop_notifier.DEFAULT_SOUND,
+                timeout=timeout,
+            )
+        )
 
     def success(self, message):
         self.notify(message=message, image_path=self.success_img_path)
 
     def failure(self, message):
         self.notify(message=message, image_path=self.fail_img_path)
+
 
 notifier = NotifierClient()
