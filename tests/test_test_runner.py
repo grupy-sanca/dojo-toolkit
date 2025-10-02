@@ -49,7 +49,7 @@ def test_doctest_test_runner_real_file_cmd_fail(notifier_mock, print_mock, code_
     )
 
     assert test_runner.run() is False
-    notifier_mock.fail.assert_called_once_with("NOT OK TO TALK")
+    notifier_mock.failure.assert_called_once_with("NOT OK TO TALK")
     assert print_mock.call_count == 2
 
 
