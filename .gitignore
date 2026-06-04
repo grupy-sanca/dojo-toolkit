@@ -6,6 +6,9 @@ __pycache__/
 #vim
 *~
 
+# IDE
+.idea/
+
 # C extensions
 *.so
 
