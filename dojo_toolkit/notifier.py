@@ -15,8 +15,10 @@ class Notifier(DesktopNotifierSync):
         self.FAIL_ICON = Icon(pathlib.Path(os.path.join(ASSETS_DIR, "r.jpg")))
         super().__init__()
 
-    def notify(self, message, image_path="", timeout=5 * 60 * 1000):
-        self.send(title="dojo toolkit", message=message)
+    def notify(self, message, timeout=5 * 60 * 1000):
+        self.send(title="dojo toolkit", message=message,
+                  ## timeout in seconds
+                  timeout=int(timeout / 1000))
 
     def success(self, message):
         self.send(title="dojo success", message=message, icon=self.SUCCESS_ICON)
