@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 from clint.textui import colored
 
+from dojo_toolkit.dojo_stats import DojoStats
 from dojo_toolkit.notifier import notifier
 from dojo_toolkit.sound_handler import SoundHandler
 from dojo_toolkit.timer import Timer
@@ -11,6 +12,7 @@ from dojo_toolkit.timer import Timer
 @dataclass
 class DojoController:
     timer: Timer
+    stats: DojoStats
     sound_player: SoundHandler
     is_running: bool = True
     round_started: bool = False
@@ -38,6 +40,7 @@ class DojoController:
         notifier.notify("Time Up", timeout=15 * 1000)
         self.sound_player.play_timeup()
         self.round_started = False
+        self.stats.rounds += 1
         print("Round finished!\n")
 
 

@@ -1,15 +1,15 @@
-from threading import Thread
 from datetime import datetime
+from threading import Thread
 from unittest import mock
 
 from watchdog.observers import Observer
 
 from dojo_toolkit import dojo_thread
 from dojo_toolkit.code_handler import DojoCodeHandler
+from dojo_toolkit.dojo_stats import DojoStats, display_stats
 from dojo_toolkit.sound_handler import SoundHandler
 from dojo_toolkit.test_runner import get_test_runner
 from dojo_toolkit.timer import Timer
-from dojo_toolkit.dojo_stats import DojoStats, display_stats
 
 
 class Dojo:
@@ -24,7 +24,11 @@ class Dojo:
         self.stats = DojoStats(datetime.now())
 
         test_runner = get_test_runner(test_runner, runner, self.code_path, self.sound_player)
-        self.controller = dojo_thread.DojoController(self.timer, self.sound_player)
+        self.controller = dojo_thread.DojoController(
+            self.timer,
+            self.stats,
+            self.sound_player,
+        )
 
         event_handler = DojoCodeHandler(dojo=self.controller, test_runner=test_runner)
 
