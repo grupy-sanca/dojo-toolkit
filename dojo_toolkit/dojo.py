@@ -26,8 +26,8 @@ class Dojo:
         test_runner = get_test_runner(test_runner, runner, self.code_path, self.sound_player)
         self.controller = dojo_thread.DojoController(
             self.timer,
-            self.stats,
             self.sound_player,
+            self.stats,
         )
 
         event_handler = DojoCodeHandler(dojo=self.controller, test_runner=test_runner)

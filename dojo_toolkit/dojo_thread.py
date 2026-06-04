@@ -12,8 +12,8 @@ from dojo_toolkit.timer import Timer
 @dataclass
 class DojoController:
     timer: Timer
-    stats: DojoStats
     sound_player: SoundHandler
+    stats: DojoStats
     is_running: bool = True
     round_started: bool = False
     info_notified: bool = False

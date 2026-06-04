@@ -9,8 +9,9 @@ from dojo_toolkit.dojo_thread import DojoController, main
 def dojo_controller():
     timer_mock = mock.Mock()
     sound_handler_mock = mock.Mock()
+    stats_mock = mock.Mock(rounds=0)
     timer_mock.duration = 10
-    return DojoController(timer_mock, sound_handler_mock)
+    return DojoController(timer_mock, sound_handler_mock, stats_mock)
 
 
 @mock.patch("dojo_toolkit.dojo_thread.DojoController.await_pilot_exchange")
