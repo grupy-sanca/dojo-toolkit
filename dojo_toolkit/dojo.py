@@ -1,4 +1,5 @@
 from threading import Thread
+from datetime import datetime
 from unittest import mock
 
 from watchdog.observers import Observer
@@ -8,6 +9,7 @@ from dojo_toolkit.code_handler import DojoCodeHandler
 from dojo_toolkit.sound_handler import SoundHandler
 from dojo_toolkit.test_runner import get_test_runner
 from dojo_toolkit.timer import Timer
+from dojo_toolkit.dojo_stats import DojoStats, display_stats
 
 
 class Dojo:
@@ -19,6 +21,7 @@ class Dojo:
         self.sound_player = mock.Mock() if mute else SoundHandler()
         self.info_notified = False
         self.timer = Timer(self.round_time)
+        self.stats = DojoStats(datetime.now())
 
         test_runner = get_test_runner(test_runner, runner, self.code_path, self.sound_player)
         self.controller = dojo_thread.DojoController(self.timer, self.sound_player)
@@ -29,14 +32,18 @@ class Dojo:
         self.observer.schedule(event_handler, self.code_path, recursive=False)
 
     def start(self):
-        self.observer.start()
-        print(f"\nWatching: {self.code_path} folder")
+        try:
+            self.observer.start()
+            print(f"\nWatching: {self.code_path} folder")
 
-        self.is_running = True
-        print("Dojo toolkit started!")
-        self.thread = Thread(target=dojo_thread.main, args=(self.controller,))
-        self.thread.daemon = True
-        self.thread.start()
-
-        self.thread.join()
-        self.observer.join()
+            self.is_running = True
+            print("Dojo toolkit started!")
+            self.thread = Thread(target=dojo_thread.main, args=(self.controller,))
+            self.thread.daemon = True
+            self.thread.start()
+            self.thread.join()
+            self.observer.join()
+        except KeyboardInterrupt:
+            display_stats(self.stats)
+        except EOFError:
+            display_stats(self.stats)
