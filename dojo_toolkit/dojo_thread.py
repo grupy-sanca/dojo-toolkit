@@ -1,4 +1,6 @@
+import sys
 import time
+from pathlib import Path
 from dataclasses import dataclass
 
 from clint.textui import colored
@@ -13,6 +15,7 @@ from dojo_toolkit.timer import Timer
 class DojoController:
     timer: Timer
     sound_player: SoundHandler
+    code_path: Path
     stats: DojoStats
     is_running: bool = True
     round_started: bool = False
@@ -20,8 +23,17 @@ class DojoController:
 
     def await_pilot_exchange(self):
         print("Awaiting the pilot and co-pilot to enter their positions.")
-        print("Press <Enter> when they are ready")
-        input()
+        print("Press <s> to snapshot the code or <Enter> when they are ready")
+        entry = input()
+        if entry == "s":
+            commit_message = input("Enter snapshot commit message: ")
+            print(f"commiting: {commit_message}")
+            import subprocess
+            git_add = subprocess.Popen(["git", "add", str(self.code_path)], stdout=subprocess.PIPE)
+            git_add.communicate()
+            git_commit = subprocess.Popen(["git", "commit", "-m", commit_message], stdout=subprocess.PIPE)
+            git_commit.communicate()
+
         print("Starting round...")
 
     def round_start(self):

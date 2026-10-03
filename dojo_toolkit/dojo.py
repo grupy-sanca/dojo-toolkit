@@ -27,6 +27,7 @@ class Dojo:
         self.controller = dojo_thread.DojoController(
             self.timer,
             self.sound_player,
+            self.code_path,
             self.stats,
         )
 
@@ -34,6 +35,7 @@ class Dojo:
 
         self.observer = Observer()
         self.observer.schedule(event_handler, self.code_path, recursive=False)
+
 
     def start(self):
         try:
